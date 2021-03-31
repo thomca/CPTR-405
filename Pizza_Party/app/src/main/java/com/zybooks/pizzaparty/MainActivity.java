@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,10 +16,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView mNumPizzasTextView;
     private RadioGroup mHowHungryRadioGroup;
 
+    private final static String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d(TAG, "onCreate was called");
 
         // Assign the widgets to fields
         mNumAttendEditText = findViewById(R.id.attendEditText);

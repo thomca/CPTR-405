@@ -40,7 +40,7 @@
         android:id="@+id/hungryRadioGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <RadioButton
             android:id="@+id/lightRadioButton"
             android:text="@string/light"
