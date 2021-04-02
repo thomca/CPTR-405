@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/number_of_people"
+        android:textColor="@color/black"
         android:textSize="@dimen/label_text_size"
         android:labelFor="@id/attendEditText" />
 
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/how_hungry"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:labelFor="@id/hungryRadioGroup" />
 
@@ -43,17 +45,20 @@
         android:orientation="vertical">
         <RadioButton
             android:id="@+id/lightRadioButton"
+            android:textColor="@color/black"
             android:text="@string/light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <RadioButton
             android:id="@+id/mediumRadioButton"
+            android:textColor="@color/black"
             android:text="@string/medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true" />
         <RadioButton
             android:id="@+id/ravenousRadioButton"
+            android:textColor="@color/black"
             android:text="@string/ravenous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -61,6 +66,7 @@
 
     <TextView
         android:id="@+id/answerTextView"
+        android:textColor="@color/black"
         android:text="@string/total_pizzasQ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
