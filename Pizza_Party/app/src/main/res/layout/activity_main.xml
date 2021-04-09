@@ -1,77 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/pizza_background"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
     tools:context="com.zybooks.pizzaparty.MainActivity">
 
     <TextView
+        android:id="@+id/numberLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="@dimen/standard_indent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/number_of_people"
-        android:textColor="@color/black"
         android:textSize="@dimen/label_text_size"
-        android:labelFor="@id/attendEditText" />
+        android:labelFor="@id/attendEditText"/>
 
     <EditText
         android:id="@+id/attendEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
+        android:layout_marginLeft="5dp"
         android:ems="5"
         android:importantForAutofill="no"
-        android:hint="@string/_10" />
+        android:hint="@string/_10"
+        app:layout_constraintBaseline_toBaselineOf="@id/numberLabel"
+        app:layout_constraintLeft_toRightOf="@id/numberLabel"/>
 
     <TextView
+        android:id="@+id/hungerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/how_hungry"
-        android:textColor="@color/black"
         android:textSize="24sp"
-        android:labelFor="@id/hungryRadioGroup" />
+        android:labelFor="@id/hungrySpinner"
+        android:layout_marginLeft="@dimen/standard_indent"
+        app:layout_constraintTop_toBottomOf="@id/numberLabel"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <RadioGroup
-        android:id="@+id/hungryRadioGroup"
-        android:layout_width="fill_parent"
+    <Spinner
+        android:id="@+id/hungrySpinner"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RadioButton
-            android:id="@+id/lightRadioButton"
-            android:textColor="@color/black"
-            android:text="@string/light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <RadioButton
-            android:id="@+id/mediumRadioButton"
-            android:textColor="@color/black"
-            android:text="@string/medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
-        <RadioButton
-            android:id="@+id/ravenousRadioButton"
-            android:textColor="@color/black"
-            android:text="@string/ravenous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RadioGroup>
+        app:layout_constraintBaseline_toBaselineOf="@id/hungerLabel"
+        app:layout_constraintLeft_toRightOf="@id/hungerLabel"
+        />
 
     <TextView
         android:id="@+id/answerTextView"
-        android:textColor="@color/black"
         android:text="@string/total_pizzasQ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:layout_marginLeft="@dimen/standard_indent"
+        app:layout_constraintTop_toBottomOf="@id/hungerLabel"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <Button
         android:id="@+id/calcButton"
@@ -79,5 +70,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick="calculateClick" />
-</LinearLayout>
+        style="@style/CalcButton"
+        android:onClick="calculateClick"
+        android:layout_marginLeft="@dimen/standard_indent"
+        android:layout_marginRight="@dimen/standard_indent"
+        app:layout_constraintTop_toBottomOf="@id/answerTextView"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout >
