@@ -9,6 +9,7 @@
     <string name="ratingLabel">Rate this app!</string>
     <string name="diceCountBarLabel">How many dice would you like to use?</string>
     <string name="diceSideBarLabel">How many sides should they have?</string>
+    <string name="nameHint">Steven West</string>
     <string-array name="characterClasses">
         <item>Fighter</item>
         <item>Wizard</item>
