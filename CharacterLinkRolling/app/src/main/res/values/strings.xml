@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Character Link Rolling</string>
     <string name="greeting">Welcome to my linkable rolling app!</string>
+    <string name="characterClassLabel">Select a class: </string>
+    <string name="characterNameLabel">Name your character: </string>
+    <string name="selectDiceSetLabel">Select a base dice type</string>
+    <string name="openDiceSaveLabel">Allow same class use of dice settings?</string>
+    <string name="saveDiceToCharacter">Save dice to character?</string>
+    <string name="ratingLabel">Rate this app!</string>
+    <string name="diceCountBarLabel">How many dice would you like to use?</string>
+    <string name="diceSideBarLabel">How many sides should they have?</string>
+    <string-array name="characterClasses">
+        <item>Fighter</item>
+        <item>Wizard</item>
+        <item>Ranger</item>
+        <item>Cleric</item>
+    </string-array>
 </resources>
