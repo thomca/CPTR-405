@@ -16,166 +16,60 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/characterScroll"
+    <TextView
+        android:id="@+id/diceSides"
+        android:layout_margin="@dimen/standard_indent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/diceSideBarLabel"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/greeting"
+        android:labelFor="@id/diceSidesBar"
+        />
+
+    <SeekBar
+        android:id="@+id/diceSidesBar"
+        android:layout_margin="@dimen/standard_indent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/greeting"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:fillViewport="true">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintInScroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/characterName"
-                android:layout_margin="@dimen/standard_indent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/characterNameLabel"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@id/constraintInScroll"
-                android:labelFor="@id/characterNameEditText"
-                />
-
-            <EditText
-                android:id="@+id/characterNameEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_indent"
-                android:ems="10"
-                android:hint="@string/nameHint"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/characterName" />
-
-            <TextView
-                android:id="@+id/characterClass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_indent"
-                android:text="@string/characterClassLabel"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/characterNameEditText"
-                android:labelFor="@id/classSpinner"
-                />
-            <Spinner
-                android:id="@+id/classSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@id/characterClass"
-                app:layout_constraintBaseline_toBaselineOf="@id/characterClass"
-                />
-            <TextView
-                android:id="@+id/sharingStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_indent"
-                android:text="@string/openDiceSaveLabel"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/characterClass"
-                android:labelFor="@id/sharingStatusClassSwitch"
-                />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/sharingStatusClassSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@id/sharingStatus"
-                app:layout_constraintBaseline_toBaselineOf="@id/sharingStatus"/>
-
-            <TextView
-                android:id="@+id/diceToCharacter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_indent"
-                android:text="@string/saveDiceToCharacter"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sharingStatus"
-                android:labelFor="@id/saveDiceToCharacterSwitch"
-                />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/saveDiceToCharacterSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="@id/sharingStatusClassSwitch"
-                app:layout_constraintBaseline_toBaselineOf="@id/diceToCharacter"/>
-
-            <TextView
-                android:id="@+id/diceSides"
-                android:layout_margin="@dimen/standard_indent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/diceSideBarLabel"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/diceToCharacter"
-                android:labelFor="@id/diceSidesBar"
-                />
-            <SeekBar
-                android:id="@+id/diceSidesBar"
-                android:layout_margin="@dimen/standard_indent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/diceSides"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:max="20"
-                android:progress="10" />
-
-            <TextView
-                android:id="@+id/diceCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_indent"
-                android:text="@string/diceCountBarLabel"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/diceSidesBar"
-                android:labelFor="@id/diceCountBar"
-                />
-            <SeekBar
-                android:id="@+id/diceCountBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_indent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/diceCount"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:max="10"
-                android:progress="5" />
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/diceSides"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:max="20"
+        android:progress="10" />
 
     <TextView
-        android:id="@+id/ratingLabel"
+        android:id="@+id/diceCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ratingLabel"
-        android:layout_marginTop="10dp"
+        android:layout_margin="@dimen/standard_indent"
+        android:text="@string/diceCountBarLabel"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/characterScroll"
-        android:labelFor="@id/ratingBar"/>
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/diceSidesBar"
+        android:labelFor="@id/diceCountBar"
+        />
+
+    <SeekBar
+        android:id="@+id/diceCountBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:rating="2.5"
+        android:layout_margin="@dimen/standard_indent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ratingLabel"/>
+        app:layout_constraintTop_toBottomOf="@id/diceCount"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:max="10"
+        android:progress="5" />
+
+    <Button
+        android:id="@+id/button_change_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_indent"
+        android:text="@string/characterButton"
+        android:onClick="onCharacterSettingsClick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/diceCountBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

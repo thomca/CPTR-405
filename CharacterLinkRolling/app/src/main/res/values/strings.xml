@@ -16,4 +16,10 @@
         <item>Ranger</item>
         <item>Cleric</item>
     </string-array>
+    <string name="classFighter">Fighter</string>
+    <string name="classWizard">Wizard</string>
+    <string name="classRanger">Ranger</string>
+    <string name="classCleric">Cleric</string>
+    <string name="classNull">None</string>
+    <string name="characterButton">Set Character</string>
 </resources>
