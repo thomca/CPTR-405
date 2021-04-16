@@ -7,16 +7,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final int SLICES_PER_PIZZA = 8;
+    private final String KEY_TOTAL_PIZZAS = "totalPizzas";
+    private int mTotalPizzas;
 
     private EditText mNumAttendEditText;
     private TextView mNumPizzasTextView;
@@ -36,16 +37,20 @@ public class MainActivity extends AppCompatActivity {
         mNumPizzasTextView = findViewById(R.id.answerTextView);
         mHowHungrySpinner = findViewById(R.id.hungrySpinner);
 
+        // Restore state
+        if (savedInstanceState != null) {
+            mTotalPizzas = savedInstanceState.getInt(KEY_TOTAL_PIZZAS);
+            displayTotal();
+        }
+
         // TextWatcher for attendEditText ie. mNumAttendEditText
         mNumAttendEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            int i = 0;
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mNumPizzasTextView.setText("");
             }
 
             @Override
@@ -63,15 +68,18 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String)parent.getItemAtPosition(position);
                 Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
-                mNumPizzasTextView.setText("");
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
 
-
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_TOTAL_PIZZAS, mTotalPizzas);
     }
 
     public void calculateClick(View view) {
@@ -97,10 +105,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the number of pizzas needed
         PizzaCalculator calc = new PizzaCalculator(numAttend, hungerLevel);
-        int totalPizzas = calc.getTotalPizzas();
+        mTotalPizzas = calc.getTotalPizzas();
+        displayTotal();
+    }
 
         // Place totalPizzas into the string resource and display
-        String totalText = getString(R.string.total_pizzas, totalPizzas);
-        mNumPizzasTextView.setText(totalText);
+        private void displayTotal() {
+            String totalText = getString(R.string.total_pizzas, mTotalPizzas);
+            mNumPizzasTextView.setText(totalText);
+        }
     }
-}
