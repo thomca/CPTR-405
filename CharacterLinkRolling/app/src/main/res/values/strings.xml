@@ -22,4 +22,5 @@
     <string name="classCleric">Cleric</string>
     <string name="classNull">None</string>
     <string name="characterButton">Set Character</string>
+    <string name="rollDice">Roll</string>
 </resources>

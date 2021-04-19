@@ -2,4 +2,7 @@
 <resources>
     <dimen name="label_text_size">30sp</dimen>
     <dimen name="standard_indent">10dp</dimen>
+    <dimen name="landscape_indent">50dp</dimen>
+    <dimen name="spinner_distance">170dp</dimen>
+    <dimen name="switch_distance">80dp</dimen>
 </resources>

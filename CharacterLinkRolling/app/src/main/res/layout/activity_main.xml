@@ -63,13 +63,32 @@
         android:progress="5" />
 
     <Button
-        android:id="@+id/button_change_color"
+        android:id="@+id/rollDiceButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_indent"
+        android:text="@string/rollDice"
+        android:onClick="onRollDiceClick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/diceCountBar" />
+
+    <Button
+        android:id="@+id/setCharacterButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_indent"
         android:text="@string/characterButton"
         android:onClick="onCharacterSettingsClick"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/diceCountBar" />
+        app:layout_constraintTop_toBottomOf="@id/rollDiceButton" />
+
+    <ImageView
+        android:id="@+id/classImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setCharacterButton"
+        app:layout_constraintRight_toRightOf="parent"
+        app:tint="@color/teal_700" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

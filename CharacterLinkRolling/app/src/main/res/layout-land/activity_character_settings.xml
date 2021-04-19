@@ -8,20 +8,22 @@
 
     <TextView
         android:id="@+id/characterName"
-        android:layout_margin="@dimen/standard_indent"
+        android:layout_marginLeft="@dimen/landscape_indent"
+        android:layout_marginTop="@dimen/landscape_indent"
+        android:layout_marginStart="@dimen/landscape_indent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/characterNameLabel"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:labelFor="@id/characterNameEditText"
-        />
+        android:labelFor="@id/characterNameEditText"/>
 
     <EditText
         android:id="@+id/characterNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_indent"
+        android:layout_marginLeft="@dimen/landscape_indent"
+        android:layout_marginStart="@dimen/landscape_indent"
         android:ems="10"
         android:hint="@string/nameHint"
         android:importantForAutofill="no"
@@ -33,7 +35,10 @@
         android:id="@+id/characterClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_indent"
+        android:layout_marginLeft="@dimen/landscape_indent"
+        android:layout_marginTop="@dimen/landscape_indent"
+        android:layout_marginBottom="@dimen/standard_indent"
+        android:layout_marginStart="@dimen/landscape_indent"
         android:text="@string/characterClassLabel"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/characterNameEditText"
@@ -43,6 +48,7 @@
         android:id="@+id/classSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spinner_distance"
         app:layout_constraintLeft_toRightOf="@id/characterClass"
         app:layout_constraintBaseline_toBaselineOf="@id/characterClass"
         />
@@ -50,7 +56,10 @@
         android:id="@+id/sharingStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_indent"
+        android:layout_marginLeft="@dimen/landscape_indent"
+        android:layout_marginTop="@dimen/standard_indent"
+        android:layout_marginBottom="@dimen/standard_indent"
+        android:layout_marginStart="@dimen/landscape_indent"
         android:text="@string/openDiceSaveLabel"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -62,6 +71,7 @@
         android:id="@+id/sharingStatusClassSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/switch_distance"
         app:layout_constraintLeft_toRightOf="@id/sharingStatus"
         app:layout_constraintBaseline_toBaselineOf="@id/sharingStatus"/>
 
@@ -69,7 +79,10 @@
         android:id="@+id/diceToCharacter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_indent"
+        android:layout_marginLeft="@dimen/landscape_indent"
+        android:layout_marginTop="@dimen/standard_indent"
+        android:layout_marginBottom="@dimen/standard_indent"
+        android:layout_marginStart="@dimen/landscape_indent"
         android:text="@string/saveDiceToCharacter"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -84,17 +97,17 @@
         app:layout_constraintLeft_toLeftOf="@id/sharingStatusClassSwitch"
         app:layout_constraintBaseline_toBaselineOf="@id/diceToCharacter"/>
 
-
     <Button
         android:id="@+id/finishSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_indent"
+        android:layout_marginLeft="@dimen/landscape_indent"
+        android:layout_marginRight="@dimen/landscape_indent"
+        android:layout_marginTop="@dimen/standard_indent"
         android:text="@string/characterButton"
         android:onClick="onFinishButtonSelected"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diceToCharacter" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
