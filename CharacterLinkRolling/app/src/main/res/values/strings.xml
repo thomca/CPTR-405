@@ -23,4 +23,10 @@
     <string name="classNull">None</string>
     <string name="characterButton">Set Character</string>
     <string name="rollDice">Roll</string>
+
+    <string name="credits">Credits</string>
+    <string name="creditsArray">"UI Design: Catherine Thomsen
+Produced by: Catherine Thomsen
+Images from: materialdesignicons.com/"
+    </string>
 </resources>

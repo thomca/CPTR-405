@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/characterSettingsInMenu"
+        android:title="@string/characterButton"
+        android:icon="@drawable/character"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/rollDiceInMenu"
+        android:title="@string/rollDice"
+        android:icon="@drawable/rolldiceicon"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/creditsScreen"
+        android:title="@string/credits"
+        app:showAsAction="never"/>
+
+</menu>

@@ -2,14 +2,17 @@ package edu.wallawalla.cs.thomca.characterlinkrolling;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.fragment.app.FragmentManager;
 import java.io.IOException;
 import java.util.Random;
 
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         // Restore state
         if (savedInstanceState != null) {
@@ -78,10 +84,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     // rolling the dice
     public void onRollDiceClick(View view){
+        rollTheDice();
+    }
+    // roll function
+    public void rollTheDice(){
         Random randomNumGenerator = new Random();
         int currentRoll;
         int finalRoll = 0;
@@ -135,5 +146,40 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(KEY_CHARACTER_CLASS,characterClassId);
         outState.putString(KEY_CHARACTER_NAME,characterName);
         outState.putString(KEY_SAVE_STATE,saveSettings);
+    }
+    //options menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.appbar_menu, menu);
+        return true;
+    }
+    //handling menu calls
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        // Determine which menu option was chosen
+        if (item.getItemId() == R.id.characterSettingsInMenu) {
+            // character settings selected
+            Intent intent = new Intent(this, CharacterSettings.class);
+            intent.putExtra(CharacterSettings.CHARACTER_NAME, characterName);
+            intent.putExtra(CharacterSettings.CHARACTER_CLASS, characterClassId);
+            intent.putExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS, saveSettings);
+            startActivityForResult(intent, SAVING_SETTINGS);
+            return true;
+        }
+        else if (item.getItemId() == R.id.rollDiceInMenu) {
+            // roll selected
+            rollTheDice();
+            return true;
+        }
+        else if (item.getItemId() == R.id.creditsScreen) {
+            // Credits selected
+            FragmentManager manager = getSupportFragmentManager();
+            CreditsPopUp dialog = new CreditsPopUp();
+            dialog.show(manager, "creditPopUpDialog");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
