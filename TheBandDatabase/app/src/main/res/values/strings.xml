@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">The Band Database</string>
+
+    <string-array name="bands">
+        <item>The Beatles</item>
+        <item>Nirvana</item>
+        <item>U2</item>
+        <item>Gaelic Storm</item>
+        <item>Pentatonix</item>
+        <item>They Might Be Giants</item>
+        <item>Green Day</item>
+        <item>Twenty One Pilots</item>
+        <item>Fall Out Boy</item>
+        <item>R.E.M.</item>
+        <item>Maroon 5</item>
+        <item>Linkin Park</item>
+        <item>Black Eyed Peas</item>
+    </string-array>
+
+    <string-array name="descriptions">
+        <item>An English rock band that formed in Liverpool in 1960.</item>
+        <item>An American rock band that formed in Washington in 1987.</item>
+        <item>An Irish rock band from Dublin that formed in 1976.</item>
+        <item>A Celtic band from Santa Monica California formed in 1996.</item>
+        <item>American a cappella group from Arlington Texas formed in 2011.</item>
+        <item>American alternative rock band formed in 1982.</item>
+        <item>American rock band formed in the East Bay of California in 1987.</item>
+        <item>Musical duo from Columbus, Ohio formed in 2009.</item>
+        <item>American rock band formed in Wilmette, Illinois in 2001.</item>
+        <item>American rock band from Athens, Georgia formed in 1980.</item>
+        <item>American pop rock band from LA, formed 1994.</item>
+        <item>American rock band from Agoura Hills, California formed 1996.</item>
+        <item>American musical group from LA, formed 1995.</item>
+    </string-array>
+</resources>
