@@ -17,89 +17,100 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <TextView
-        android:id="@+id/greeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/greeting"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_toolbar"/>
-
-    <TextView
-        android:id="@+id/diceSides"
-        android:layout_margin="@dimen/standard_indent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/diceSideBarLabel"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/greeting"
-        android:labelFor="@id/diceSidesBar"
+    <FrameLayout
+        android:id="@+id/main_fragment_container"
+        android:layout_marginTop="@dimen/landscape_indent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar"
         />
 
-    <SeekBar
-        android:id="@+id/diceSidesBar"
-        android:layout_margin="@dimen/standard_indent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/diceSides"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:max="20"
-        android:progress="10" />
 
-    <TextView
-        android:id="@+id/diceCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_indent"
-        android:text="@string/diceCountBarLabel"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/diceSidesBar"
-        android:labelFor="@id/diceCountBar"
-        />
 
-    <SeekBar
-        android:id="@+id/diceCountBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_indent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/diceCount"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:max="10"
-        android:progress="5" />
 
-    <Button
-        android:id="@+id/rollDiceButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_indent"
-        android:text="@string/rollDice"
-        android:onClick="onRollDiceClick"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/diceCountBar" />
+<!--    <TextView-->
+<!--        android:id="@+id/greeting"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/greeting"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/my_toolbar"/>-->
 
-    <Button
-        android:id="@+id/setCharacterButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/standard_indent"
-        android:layout_marginRight="@dimen/standard_indent"
-        android:text="@string/characterButton"
-        android:onClick="onCharacterSettingsClick"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rollDiceButton" />
+<!--    <TextView-->
+<!--        android:id="@+id/diceSides"-->
+<!--        android:layout_margin="@dimen/standard_indent"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/diceSideBarLabel"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/greeting"-->
+<!--        android:labelFor="@id/diceSidesBar"-->
+<!--        />-->
 
-    <ImageView
-        android:id="@+id/classImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/setCharacterButton"
-        app:layout_constraintRight_toRightOf="parent"
-        app:tint="@color/teal_700" />
+<!--    <SeekBar-->
+<!--        android:id="@+id/diceSidesBar"-->
+<!--        android:layout_margin="@dimen/standard_indent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/diceSides"-->
+<!--        style="@style/Widget.AppCompat.SeekBar.Discrete"-->
+<!--        android:max="20"-->
+<!--        android:progress="10" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/diceCount"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/standard_indent"-->
+<!--        android:text="@string/diceCountBarLabel"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/diceSidesBar"-->
+<!--        android:labelFor="@id/diceCountBar"-->
+<!--        />-->
+
+<!--    <SeekBar-->
+<!--        android:id="@+id/diceCountBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/standard_indent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/diceCount"-->
+<!--        style="@style/Widget.AppCompat.SeekBar.Discrete"-->
+<!--        android:max="10"-->
+<!--        android:progress="5" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/rollDiceButton"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/standard_indent"-->
+<!--        android:text="@string/rollDice"-->
+<!--        android:onClick="onRollDiceClick"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/diceCountBar" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/setCharacterButton"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="@dimen/standard_indent"-->
+<!--        android:layout_marginRight="@dimen/standard_indent"-->
+<!--        android:text="@string/characterButton"-->
+<!--        android:onClick="onCharacterSettingsClick"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/rollDiceButton" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/classImage"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/setCharacterButton"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:tint="@color/teal_700" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

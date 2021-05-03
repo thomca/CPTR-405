@@ -121,9 +121,7 @@ public class CharacterSettings extends AppCompatActivity {
                 }
             }
         });
-
         //add Text Watcher to store character name
-
 
     }
 

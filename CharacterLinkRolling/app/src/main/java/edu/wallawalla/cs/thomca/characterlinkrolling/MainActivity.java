@@ -8,15 +8,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import java.io.IOException;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements MainFragment.InteractionListener {
 
     private int characterClassId = R.string.classNull;
     private String characterName;
@@ -33,64 +39,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Begin a new FragmentTransaction for adding a HelloFragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        MainFragment fragment = (MainFragment) fragmentManager.findFragmentById(R.id.main_fragment_container);
+
+        // Add the MainFragment to the fragment container in the activity layout
+        if(fragment == null){
+            fragment = new MainFragment();
+            fragmentTransaction.add(R.id.main_fragment_container, fragment);
+            fragmentTransaction.commit();
+        }
+        // Replace MainFragment if state saved when going from portrait to landscape
+        if (savedInstanceState != null && savedInstanceState.getInt(KEY_CHARACTER_CLASS) != 0) {
+            characterClassId = savedInstanceState.getInt(KEY_CHARACTER_CLASS);
+            fragment = fragment.newInstance(savedInstanceState.getInt(KEY_CHARACTER_CLASS));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment_container, fragment)
+                    .commit();
+        }
+
+
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+    }
 
-        // Restore state
-        if (savedInstanceState != null) {
-                characterClassId = savedInstanceState.getInt(KEY_CHARACTER_CLASS);
-                characterName = savedInstanceState.getString(KEY_CHARACTER_NAME);
-                saveSettings = savedInstanceState.getString(KEY_SAVE_STATE);
-        }
-        setClassImage();
-
-        SeekBar diceCountSeekBar = findViewById(R.id.diceCountBar);
-        SeekBar diceSidesSeekBar = findViewById(R.id.diceSidesBar);
-
-        //tracking seek bar for dice count
-        diceCountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // progress ranges from 0 to max
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                diceCount= seekBar.getProgress();
-                String item = String.valueOf(diceCount);
-                Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //tracking seek bar for dice sides
-        diceSidesSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // progress ranges from 0 to max
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                diceSides = seekBar.getProgress();
-                String item = String.valueOf(diceSides);
-                Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
-            }
-        });
-
+    public void onCharacterInteraction(int classId){
+        characterClassId = classId;
     }
 
     // rolling the dice
-    public void onRollDiceClick(View view){
-        rollTheDice();
-    }
+    public void onRollDiceClick(View view){ rollTheDice(); }
+
     // roll function
     public void rollTheDice(){
         Random randomNumGenerator = new Random();
@@ -104,42 +84,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
     }
 
-    // character settings button
-    public void onCharacterSettingsClick(View view) {
-        Intent intent = new Intent(this, CharacterSettings.class);
-        intent.putExtra(CharacterSettings.CHARACTER_NAME, characterName);
-        intent.putExtra(CharacterSettings.CHARACTER_CLASS, characterClassId);
-        intent.putExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS, saveSettings);
-        startActivityForResult(intent, SAVING_SETTINGS);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == SAVING_SETTINGS) {
-            characterClassId = data.getIntExtra(CharacterSettings.CHARACTER_CLASS, R.string.classNull);
-            characterName = data.getStringExtra(CharacterSettings.CHARACTER_NAME);
-            saveSettings = data.getStringExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS);
-        }
-        setClassImage();
-    }
-
-    public void setClassImage(){
-        ImageView characterImage = findViewById(R.id.classImage);
-        if (characterClassId == R.string.classCleric){
-            characterImage.setImageResource(R.drawable.clericgraphic);}
-        else if (characterClassId == R.string.classFighter){
-            characterImage.setImageResource(R.drawable.fightergraphic);}
-        else if (characterClassId == R.string.classRanger){
-            characterImage.setImageResource(R.drawable.rangergraphic);}
-        else if (characterClassId == R.string.classWizard){
-            characterImage.setImageResource(R.drawable.wizardgraphic);}
-        else{
-            characterImage.setImageResource(R.drawable.diceicon);
-        }
-    }
-
-    //on save
+    // on save
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -147,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
         outState.putString(KEY_CHARACTER_NAME,characterName);
         outState.putString(KEY_SAVE_STATE,saveSettings);
     }
-    //options menu
+    // options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
         return true;
     }
-    //handling menu calls
+    // handling menu calls
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -182,4 +127,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
