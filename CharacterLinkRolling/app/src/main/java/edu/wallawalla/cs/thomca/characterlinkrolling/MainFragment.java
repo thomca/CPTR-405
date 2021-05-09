@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class MainFragment extends Fragment implements View.OnClickListener{
+public class MainFragment extends Fragment implements View.OnClickListener {
 
     private int characterClassId = R.string.classNull;
     private String characterName;
@@ -36,7 +36,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
     // activity listener
     public interface InteractionListener {
-        void onCharacterInteraction(int classId);
+        void onCharacterInteraction(int classId, String charName, String saveSet);
+        void updateDiceVals(int diceN, int diceS);
     }
 
     public MainFragment() {
@@ -116,6 +117,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                 diceCount = seekBar.getProgress();
                 String item = String.valueOf(diceCount);
                 Toast.makeText(mHost, item, Toast.LENGTH_SHORT).show();
+                sendDiceVals();
             }
         });
 
@@ -135,6 +137,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                 diceSides = seekBar.getProgress();
                 String item = String.valueOf(diceSides);
                 Toast.makeText(mHost, item, Toast.LENGTH_SHORT).show();
+                sendDiceVals();
             }
         });
 
@@ -208,8 +211,18 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
     // communicating with main, save class
     public void sendCharacterClassId() {
-        mListener.onCharacterInteraction(characterClassId);
+        mListener.onCharacterInteraction(characterClassId, characterName, saveSettings);
     }
 
+    public void sendDiceVals(){
+        mListener.updateDiceVals(diceCount,diceSides);
+    }
+
+    // gets settings from MainActivity
+    public void setCharacterInfo(int classId, String charName, String saveSet){
+        characterClassId = classId;
+        characterName = charName;
+        saveSettings = saveSet;
+    }
 
 }

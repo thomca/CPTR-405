@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     private int diceSides = 10;
     private int diceCount = 5;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +65,15 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(myToolbar);
     }
 
-    public void onCharacterInteraction(int classId){
+    public void onCharacterInteraction(int classId, String charName, String saveSet){
         characterClassId = classId;
+        characterName = charName;
+        saveSettings = saveSet;
+    }
+
+    public void  updateDiceVals(int diceN, int diceS){
+        diceSides = diceS;
+        diceCount = diceN;
     }
 
     // rolling the dice
@@ -103,16 +111,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         // Determine which menu option was chosen
-        if (item.getItemId() == R.id.characterSettingsInMenu) {
-            // character settings selected
-            Intent intent = new Intent(this, CharacterSettings.class);
-            intent.putExtra(CharacterSettings.CHARACTER_NAME, characterName);
-            intent.putExtra(CharacterSettings.CHARACTER_CLASS, characterClassId);
-            intent.putExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS, saveSettings);
-            startActivityForResult(intent, SAVING_SETTINGS);
-            return true;
-        }
-        else if (item.getItemId() == R.id.rollDiceInMenu) {
+        if (item.getItemId() == R.id.rollDiceInMenu) {
             // roll selected
             rollTheDice();
             return true;
