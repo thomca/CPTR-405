@@ -1,15 +1,20 @@
 <resources>
+    <!-- main page   -->
     <string name="app_name">Character Link Rolling</string>
     <string name="greeting">Welcome to my linkable rolling app!</string>
-    <string name="characterClassLabel">Select a class: </string>
-    <string name="characterNameLabel">Name your character: </string>
-    <string name="selectDiceSetLabel">Select a base dice type</string>
-    <string name="openDiceSaveLabel">Allow same class use of dice settings?</string>
-    <string name="saveDiceToCharacter">Save dice to character?</string>
-    <string name="ratingLabel">Rate this app!</string>
     <string name="diceCountBarLabel">How many dice would you like to use?</string>
     <string name="diceSideBarLabel">How many sides should they have?</string>
+    <string name="rollDice">Roll</string>
+    <string name="characterButton">Set Character</string>
+
+    <!-- save settings -->
+    <string name="characterNameLabel">Name your character: </string>
     <string name="nameHint">Steven West</string>
+    <string name="characterClassLabel">Select a class: </string>
+    <string name="openDiceSaveLabel">Allow same class use of dice settings?</string>
+    <string name="saveDiceToCharacter">Save dice to character?</string>
+
+    <!-- character options -->
     <string-array name="characterClasses">
         <item>Fighter</item>
         <item>Wizard</item>
@@ -21,13 +26,12 @@
     <string name="classRanger">Ranger</string>
     <string name="classCleric">Cleric</string>
     <string name="classNull">None</string>
-    <string name="characterButton">Set Character</string>
-    <string name="rollDice">Roll</string>
 
+    <!-- credit info -->
     <string name="credits">Credits</string>
-    <string name="creditsArray">"UI Design: Catherine Thomsen
-Produced by: Catherine Thomsen
-Images from: materialdesignicons.com/"
+    <string name="creditsArray">" UI Design: Catherine Thomsen \n"
+        "Produced by: Catherine Thomsen \n"
+        "Images from: materialdesignicons.com/"
     </string>
 
 </resources>
