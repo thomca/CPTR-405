@@ -48,8 +48,8 @@
         android:id="@+id/classSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spinner_distance"
-        app:layout_constraintLeft_toRightOf="@id/characterClass"
+        android:layout_marginRight="@dimen/landscape_indent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@id/characterClass"
         />
     <TextView
@@ -71,8 +71,8 @@
         android:id="@+id/sharingStatusClassSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/switch_distance"
-        app:layout_constraintLeft_toRightOf="@id/sharingStatus"
+        android:layout_marginRight="@dimen/landscape_indent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@id/sharingStatus"/>
 
     <TextView

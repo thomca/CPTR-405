@@ -27,9 +27,12 @@
     <string name="classCleric">Cleric</string>
     <string name="classNull">None</string>
 
+    <!-- character pop up -->
+    <string name="namesTitle">Characters</string>
+
     <!-- credit info -->
     <string name="credits">Credits</string>
-    <string name="creditsArray">" UI Design: Catherine Thomsen \n"
+    <string name="creditsInfo">" UI Design: Catherine Thomsen \n"
         "Produced by: Catherine Thomsen \n"
         "Images from: materialdesignicons.com/"
     </string>

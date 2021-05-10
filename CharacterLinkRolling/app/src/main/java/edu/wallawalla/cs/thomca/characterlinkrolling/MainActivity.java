@@ -33,12 +33,14 @@ public class MainActivity extends AppCompatActivity
     private final String KEY_SAVE_STATE = "Save State";
     private int diceSides = 10;
     private int diceCount = 5;
+    private CharactersDatabase mCharactersDatabase;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mCharactersDatabase = CharactersDatabase.getInstance(getApplicationContext());
 
         // Begin a new FragmentTransaction for adding a HelloFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -121,6 +123,13 @@ public class MainActivity extends AppCompatActivity
             FragmentManager manager = getSupportFragmentManager();
             CreditsPopUp dialog = new CreditsPopUp();
             dialog.show(manager, "creditPopUpDialog");
+            return true;
+        }
+        else if (item.getItemId() == R.id.loadCharacterInMenu){
+            // Character selected
+            FragmentManager manager = getSupportFragmentManager();
+            SelectCharacterPopUp dialog = new SelectCharacterPopUp();
+            dialog.show(manager, "selectCharacterPopUp");
             return true;
         }
 
