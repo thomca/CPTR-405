@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface CharacterDao {
     @Query("SELECT * FROM Character WHERE id = :id")
-    public Character getCharacter(int id);
+    public Character getCharacter(long id);
 
     @Query("SELECT * FROM Character WHERE name = :name")
     public Character getCharacterByName(String name);

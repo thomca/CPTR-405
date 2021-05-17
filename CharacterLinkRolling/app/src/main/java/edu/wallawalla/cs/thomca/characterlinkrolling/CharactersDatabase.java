@@ -5,7 +5,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Character.class, Dice.class}, version = 1)
+@Database(entities = {Character.class, Action.class, LinksBase.class}, version = 1)
 public abstract class CharactersDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "character.db";
@@ -24,7 +24,8 @@ public abstract class CharactersDatabase extends RoomDatabase{
     }
 
     public abstract CharacterDao characterDao();
-    public abstract DiceDao diceDao();
+    public abstract ActionDao actionDao();
+    public abstract LinksDao linksBase();
 
     private void addStarterData() { // Add a few subjects and questions if database is empty
         if (characterDao().getCharacters().size() == 0) {
@@ -33,15 +34,19 @@ public abstract class CharactersDatabase extends RoomDatabase{
             runInTransaction(new Runnable() {
                 @Override
                 public void run() {
-                    Character character = new Character(0, "Steven West", R.string.classFighter, "FF");
-                    Dice dice = new Dice(0, 6, 2, 3, R.string.classNull,0);
-                    diceDao().insertDice(dice);
-                    characterDao().insertCharacter(character);
+                    Character character = new Character("Steven West", R.string.classFighter, "FF");
+                    Action action = new Action(6, 2, 3);
+                    long actionId = actionDao().insertAction(action);
+                    long charId = characterDao().insertCharacter(character);
+                    LinksBase link = new LinksBase(actionId, charId, R.string.classNull);
+                    linksBase().insertLinks(link);
 
-                    character = new Character(1, "Lena Verin", R.string.classCleric, "FF");
-                    dice = new Dice(1, 20, 1, 5, R.string.classCleric,-1);
-                    diceDao().insertDice(dice);
-                    characterDao().insertCharacter(character);
+                    character = new Character("Lena Verin", R.string.classCleric, "FF");
+                    action = new Action(20, 1, 5);
+                    actionId = actionDao().insertAction(action);
+                    charId = characterDao().insertCharacter(character);
+                    link = new LinksBase(actionId, charId, R.string.classCleric);
+                    linksBase().insertLinks(link);
                 }
             });
         }

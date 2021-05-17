@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey;
 import java.util.List;
 
 @Entity
-public class Dice {
+public class Action {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int mId;
+    private long mId;
 
     @NonNull
     @ColumnInfo(name = "sides")
@@ -25,27 +25,18 @@ public class Dice {
     @ColumnInfo(name = "modifier")
     private int mModifier;
 
-    @ColumnInfo(name = "classes")
-    private int mClasses;
+    public Action() {}
 
-    @ColumnInfo(name = "character")
-    private int mCharacter;
-
-    public Dice() {}
-
-    public Dice(int id, int sides, int count, int mod, int classes,int characters) {
-        mId = id;
+    public Action(int sides, int count, int mod) {
         mModifier = mod;
         mNumSides = sides;
         mDiceCount = count;
-        mClasses = classes;
-        mCharacter = characters;
     }
 
-    public int getId(){
+    public long getId(){
         return mId;
     }
-    public void setId(int id){
+    public void setId(long id){
         mId = id;
     }
     public int getModifier(){
@@ -65,17 +56,5 @@ public class Dice {
     }
     public void setDiceCount(int count){
         mDiceCount = count;
-    }
-    public int getClasses(){
-        return mClasses;
-    }
-    public void setClasses(int classes){
-        mClasses = classes;
-    }
-    public int getCharacter(){
-        return mCharacter;
-    }
-    public void setCharacter(int character){
-        mCharacter = character;
     }
 }

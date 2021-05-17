@@ -2,7 +2,7 @@
     <!-- main page   -->
     <string name="app_name">Character Link Rolling</string>
     <string name="greeting">Welcome to my linkable rolling app!</string>
-    <string name="diceCountBarLabel">How many dice would you like to use?</string>
+    <string name="diceCountBarLabel">How many action would you like to use?</string>
     <string name="diceSideBarLabel">How many sides should they have?</string>
     <string name="rollDice">Roll</string>
     <string name="characterButton">Set Character</string>
@@ -11,8 +11,8 @@
     <string name="characterNameLabel">Name your character: </string>
     <string name="nameHint">Steven West</string>
     <string name="characterClassLabel">Select a class: </string>
-    <string name="openDiceSaveLabel">Allow same class use of dice settings?</string>
-    <string name="saveDiceToCharacter">Save dice to character?</string>
+    <string name="openDiceSaveLabel">Allow same class use of action settings?</string>
+    <string name="saveDiceToCharacter">Save action to character?</string>
 
     <!-- character options -->
     <string-array name="characterClasses">

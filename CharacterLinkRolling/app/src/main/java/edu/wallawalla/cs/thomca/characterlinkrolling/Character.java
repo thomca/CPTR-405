@@ -9,7 +9,7 @@ public class Character {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int mId;
+    private long mId;
 
     @ColumnInfo(name = "name")
     private String mName;
@@ -20,18 +20,17 @@ public class Character {
     @ColumnInfo(name = "save")
     private String mSaveSet;
 
-    public Character(int id, String name, int charClass, String save) {
-        mId = id;
+    public Character(String name, int charClass, String save) {
         mName = name;
         mCharClass = charClass;
         mSaveSet = save;
     }
     public Character(){}
 
-    public int getId(){
+    public long getId(){
         return mId;
     }
-    public void setId(int id){
+    public void setId(long id){
         mId = id;
     }
     public String getName(){

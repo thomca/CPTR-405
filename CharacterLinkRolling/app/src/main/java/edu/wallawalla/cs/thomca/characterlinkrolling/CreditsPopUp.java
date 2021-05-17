@@ -12,8 +12,6 @@ import androidx.fragment.app.DialogFragment;
 
 public class CreditsPopUp extends DialogFragment {
 
-    CharacterDiceDirectory directory;
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

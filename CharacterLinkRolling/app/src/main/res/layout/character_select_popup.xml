@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="edu.wallawalla.cs.thomca.characterlinkrolling.MainActivity">
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycler_view_character_popup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/standard_indent"
-    android:layout_marginRight="@dimen/standard_indent"
-    android:gravity="center_vertical">
+    android:scrollbars="vertical" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/addSubjectButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:contentDescription="actionButton"
+    android:layout_gravity="end|bottom"
+    app:srcCompat="@drawable/character"
+    android:layout_margin="16dp" />
 
 </FrameLayout>
