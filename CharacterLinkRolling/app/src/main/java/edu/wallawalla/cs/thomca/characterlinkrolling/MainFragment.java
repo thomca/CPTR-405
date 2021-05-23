@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -100,6 +102,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         characterButton.setTag(1);
         Button rollButton = mRoot.findViewById(R.id.rollDiceButton);
         rollButton.setTag(2);
+        ImageView icon = mRoot.findViewById(R.id.classImage);
+        icon.setTag(3);
 
         //tracking seek bar for dice count
         diceCountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -143,6 +147,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         characterButton.setOnClickListener(this);
         rollButton.setOnClickListener(this);
+        icon.setOnClickListener(this);
 
         return mRoot;
     }
@@ -198,14 +203,25 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         startActivityForResult(intent, SAVING_SETTINGS);
     }
 
+    // animation of character icon
+    public void animateIcon(View view){
+        // run animation
+        ImageView characterIcon = mRoot.findViewById(R.id.classImage);
+        Animation characterAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.class_icon_animation);
+        characterIcon.startAnimation(characterAnim);
+    }
+
     @Override
     public void onClick(View view) {
-        // characterButton = 1, rollButton = 2
+        // characterButton = 1, rollButton = 2 icon = 3
         if (view.getTag() == (Object) 1){
             onCharacterSettingsClick(view);
         }
         if (view.getTag() == (Object) 2){
             onRollDiceClick(view);
+        }
+        if (view.getTag() == (Object) 3){
+            animateIcon(view);
         }
     }
 

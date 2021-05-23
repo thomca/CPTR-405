@@ -12,9 +12,11 @@
         android:layout_height="wrap_content"
         android:text="@string/greeting"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/standard_indent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/standard_indent" />
 
     <TextView
         android:id="@+id/diceSides"
@@ -22,10 +24,11 @@
         android:layout_height="wrap_content"
         android:text="@string/diceSideBarLabel"
         android:textSize="20sp"
+        android:layout_marginLeft="@dimen/standard_indent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/greeting"
         android:labelFor="@id/diceSidesBar"
-        />
+        android:layout_marginStart="@dimen/standard_indent" />
 
     <SeekBar
         android:id="@+id/diceSidesBar"
@@ -79,7 +82,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_indent"
         android:text="@string/characterButton"
-        android:onClick="onCharacterSettingsClick"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rollDiceButton" />
 
