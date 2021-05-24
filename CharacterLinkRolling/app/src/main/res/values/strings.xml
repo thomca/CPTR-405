@@ -1,7 +1,7 @@
 <resources>
     <!-- main page   -->
     <string name="app_name">Character Link Rolling</string>
-    <string name="greeting">Welcome to my linkable rolling app!</string>
+    <string name="greeting">Welcome!</string>
     <string name="diceCountBarLabel">How many action would you like to use?</string>
     <string name="diceSideBarLabel">How many sides should they have?</string>
     <string name="rollDice">Roll</string>

@@ -5,4 +5,6 @@
     <dimen name="landscape_indent">50dp</dimen>
     <dimen name="spinner_distance">170dp</dimen>
     <dimen name="switch_distance">80dp</dimen>
+    <dimen name="popUpHeight">450dp</dimen>
+    <dimen name="popUpWidth">1000dp</dimen>
 </resources>

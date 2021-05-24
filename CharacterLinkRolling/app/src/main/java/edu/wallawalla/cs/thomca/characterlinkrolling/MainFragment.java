@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import java.util.Random;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
 
@@ -40,6 +37,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public interface InteractionListener {
         void onCharacterInteraction(int classId, String charName, String saveSet);
         void updateDiceVals(int diceN, int diceS);
+        void rollTheDice();
     }
 
     public MainFragment() {
@@ -178,21 +176,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         sendCharacterClassId();
     }
 
-    // rolling the dice
-    public void onRollDiceClick(View view){ rollTheDice(); }
-
-    // roll function
-    public void rollTheDice(){
-        Random randomNumGenerator = new Random();
-        int currentRoll;
-        int finalRoll = 0;
-        for(int i = 0; i < diceCount; i++){
-            currentRoll = randomNumGenerator.nextInt(diceSides) + 1;
-            finalRoll = finalRoll + currentRoll;
-        }
-        String item = String.valueOf(finalRoll);
-        Toast.makeText(mHost, item, Toast.LENGTH_SHORT).show();
-    }
 
     // character settings button
     public void onCharacterSettingsClick(View view) {
@@ -218,7 +201,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             onCharacterSettingsClick(view);
         }
         if (view.getTag() == (Object) 2){
-            onRollDiceClick(view);
+            mListener.rollTheDice();
         }
         if (view.getTag() == (Object) 3){
             animateIcon(view);
@@ -231,7 +214,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     public void sendDiceVals(){
-        mListener.updateDiceVals(diceCount,diceSides);
+        mListener.updateDiceVals(diceCount, diceSides);
     }
 
     // gets settings from MainActivity

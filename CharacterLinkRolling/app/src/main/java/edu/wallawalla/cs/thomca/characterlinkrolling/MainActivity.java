@@ -3,26 +3,19 @@ package edu.wallawalla.cs.thomca.characterlinkrolling;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import java.io.IOException;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
-    implements MainFragment.InteractionListener {
+    implements MainFragment.InteractionListener, SelectCharacterPopUp.PopInteractionListener{
 
     private int characterClassId = R.string.classNull;
     private String characterName;
@@ -34,7 +27,6 @@ public class MainActivity extends AppCompatActivity
     private int diceSides = 10;
     private int diceCount = 5;
     private CharactersDatabase mCharactersDatabase;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +68,12 @@ public class MainActivity extends AppCompatActivity
     public void  updateDiceVals(int diceN, int diceS){
         diceSides = diceS;
         diceCount = diceN;
+    }
+
+    public void openCharacter(Character character){
+        characterClassId = character.getCharClass();
+        characterName = character.getName();
+        saveSettings = character.getSaveSet();
     }
 
     // rolling the dice
