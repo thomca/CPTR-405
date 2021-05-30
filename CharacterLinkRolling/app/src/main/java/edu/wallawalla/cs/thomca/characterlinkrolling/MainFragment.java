@@ -21,33 +21,35 @@ import android.widget.Toast;
 public class MainFragment extends Fragment implements View.OnClickListener {
 
     private int characterClassId = R.string.classNull;
-    private String characterName;
-    private String saveSettings;
-    private final int SAVING_SETTINGS = 0;
     private final static String KEY_CHARACTER_CLASS = "Character Class";
-    private final String KEY_CHARACTER_NAME = "Character Name";
-    private final String KEY_SAVE_STATE = "Save State";
-    private int diceSides = 10;
-    private int diceCount = 5;
+    private final static String KEY_DICE_SIDES = "Number of sides";
+    private final static String KEY_DICE_COUNT = "Number of dice";
+    private final static String KEY_MODIFIER = "Modifier";
+    private int mDiceSides = 10;
+    private int mDiceCount = 5;
+    private int mModifier = 0;
     private MainActivity mHost;
     private ViewGroup mRoot;
     private InteractionListener mListener;
 
     // activity listener
     public interface InteractionListener {
-        void onCharacterInteraction(int classId, String charName, String saveSet);
         void updateDiceVals(int diceN, int diceS);
         void rollTheDice();
+        void saveCharacterSettings(View view);
     }
 
     public MainFragment() {
         // Required empty public constructor
     }
 
-    public static MainFragment newInstance(int classId) {
+    public static MainFragment newInstance(int classId, int diceCount, int diceSides, int modifier) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         args.putInt(KEY_CHARACTER_CLASS, classId);
+        args.putInt(KEY_DICE_COUNT, diceCount);
+        args.putInt(KEY_DICE_SIDES, diceSides);
+        args.putInt(KEY_MODIFIER, modifier);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,11 +80,15 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         // Restore state
         if (savedInstanceState != null) {
             characterClassId = savedInstanceState.getInt(KEY_CHARACTER_CLASS);
-            characterName = savedInstanceState.getString(KEY_CHARACTER_NAME);
-            saveSettings = savedInstanceState.getString(KEY_SAVE_STATE);
+            mDiceSides = savedInstanceState.getInt(KEY_DICE_SIDES);
+            mDiceCount = savedInstanceState.getInt(KEY_DICE_COUNT);
+            mModifier = savedInstanceState.getInt(KEY_MODIFIER);
         }
         if (getArguments() != null) {
             characterClassId = getArguments().getInt(KEY_CHARACTER_CLASS);
+            mDiceSides = getArguments().getInt(KEY_DICE_SIDES);
+            mDiceCount = getArguments().getInt(KEY_DICE_COUNT);
+            mModifier = getArguments().getInt(KEY_MODIFIER);
         }
     }
 
@@ -95,7 +101,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         setClassImage();
         // copied from main activity
         SeekBar diceCountSeekBar = mRoot.findViewById(R.id.diceCountBar);
+        diceCountSeekBar.setProgress(mDiceCount);
         SeekBar diceSidesSeekBar = mRoot.findViewById(R.id.diceSidesBar);
+        diceSidesSeekBar.setProgress(mDiceSides);
         Button characterButton = mRoot.findViewById(R.id.setCharacterButton);
         characterButton.setTag(1);
         Button rollButton = mRoot.findViewById(R.id.rollDiceButton);
@@ -116,8 +124,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                diceCount = seekBar.getProgress();
-                String item = String.valueOf(diceCount);
+                mDiceCount = seekBar.getProgress();
+                String item = String.valueOf(mDiceCount);
                 Toast.makeText(mHost, item, Toast.LENGTH_SHORT).show();
                 sendDiceVals();
             }
@@ -136,8 +144,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                diceSides = seekBar.getProgress();
-                String item = String.valueOf(diceSides);
+                mDiceSides = seekBar.getProgress();
+                String item = String.valueOf(mDiceSides);
                 Toast.makeText(mHost, item, Toast.LENGTH_SHORT).show();
                 sendDiceVals();
             }
@@ -164,26 +172,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == android.app.Activity.RESULT_OK && requestCode == SAVING_SETTINGS) {
-            characterClassId = data.getIntExtra(CharacterSettings.CHARACTER_CLASS, R.string.classNull);
-            characterName = data.getStringExtra(CharacterSettings.CHARACTER_NAME);
-            saveSettings = data.getStringExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS);
-        }
-        setClassImage();
-        sendCharacterClassId();
-    }
-
-
-    // character settings button
     public void onCharacterSettingsClick(View view) {
-        Intent intent = new Intent(view.getContext(), CharacterSettings.class);
-        intent.putExtra(CharacterSettings.CHARACTER_NAME, characterName);
-        intent.putExtra(CharacterSettings.CHARACTER_CLASS, characterClassId);
-        intent.putExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS, saveSettings);
-        startActivityForResult(intent, SAVING_SETTINGS);
+        mListener.saveCharacterSettings(view);
     }
 
     // animation of character icon
@@ -208,20 +198,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    // communicating with main, save class
-    public void sendCharacterClassId() {
-        mListener.onCharacterInteraction(characterClassId, characterName, saveSettings);
-    }
-
     public void sendDiceVals(){
-        mListener.updateDiceVals(diceCount, diceSides);
+        mListener.updateDiceVals(mDiceCount, mDiceSides);
     }
 
-    // gets settings from MainActivity
-    public void setCharacterInfo(int classId, String charName, String saveSet){
-        characterClassId = classId;
-        characterName = charName;
-        saveSettings = saveSet;
-    }
 
 }

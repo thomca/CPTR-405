@@ -24,9 +24,14 @@ public class MainActivity extends AppCompatActivity
     private final String KEY_CHARACTER_CLASS = "Character Class";
     private final String KEY_CHARACTER_NAME = "Character Name";
     private final String KEY_SAVE_STATE = "Save State";
+    private final String KEY_DICE_SIDES = "Number of sides";
+    private final String KEY_DICE_COUNT = "Number of dice";
+    private final String KEY_MODIFIER = "Modifier";
     private int diceSides = 10;
     private int diceCount = 5;
+    private int modifier = 0;
     private CharactersDatabase mCharactersDatabase;
+    MainFragment mainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +42,25 @@ public class MainActivity extends AppCompatActivity
         // Begin a new FragmentTransaction for adding a HelloFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        MainFragment fragment = (MainFragment) fragmentManager.findFragmentById(R.id.main_fragment_container);
+        mainFragment = (MainFragment) fragmentManager.findFragmentById(R.id.main_fragment_container);
 
         // Add the MainFragment to the fragment container in the activity layout
-        if(fragment == null){
-            fragment = new MainFragment();
-            fragmentTransaction.add(R.id.main_fragment_container, fragment);
+        if(mainFragment == null){
+            mainFragment = new MainFragment();
+            fragmentTransaction.add(R.id.main_fragment_container, mainFragment);
             fragmentTransaction.commit();
         }
         // Replace MainFragment if state saved when going from portrait to landscape
         if (savedInstanceState != null && savedInstanceState.getInt(KEY_CHARACTER_CLASS) != 0) {
             characterClassId = savedInstanceState.getInt(KEY_CHARACTER_CLASS);
-            fragment = fragment.newInstance(savedInstanceState.getInt(KEY_CHARACTER_CLASS));
+            diceCount = savedInstanceState.getInt(KEY_DICE_COUNT);
+            diceSides = savedInstanceState.getInt(KEY_DICE_SIDES);
+            modifier = savedInstanceState.getInt(KEY_MODIFIER);
+            mainFragment = mainFragment.newInstance(characterClassId, diceCount, diceSides, modifier);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_fragment_container, fragment)
+                    .replace(R.id.main_fragment_container, mainFragment)
                     .commit();
         }
-
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -99,6 +106,9 @@ public class MainActivity extends AppCompatActivity
         outState.putInt(KEY_CHARACTER_CLASS,characterClassId);
         outState.putString(KEY_CHARACTER_NAME,characterName);
         outState.putString(KEY_SAVE_STATE,saveSettings);
+        outState.putInt(KEY_DICE_COUNT, diceCount);
+        outState.putInt(KEY_DICE_SIDES, diceSides);
+        outState.putInt(KEY_MODIFIER, modifier);
     }
     // options menu
     @Override
@@ -133,5 +143,33 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == android.app.Activity.RESULT_OK && requestCode == SAVING_SETTINGS) {
+            characterClassId = data.getIntExtra(CharacterSettings.CHARACTER_CLASS, R.string.classNull);
+            characterName = data.getStringExtra(CharacterSettings.CHARACTER_NAME);
+            saveSettings = data.getStringExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS);
+        }
+        //update main fragment
+        mainFragment = mainFragment.newInstance(characterClassId, diceCount, diceSides, modifier);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment_container, mainFragment)
+                .commit();
+    }
+
+
+    // character settings button
+    public void saveCharacterSettings(View view) {
+        Intent intent = new Intent(view.getContext(), CharacterSettings.class);
+        intent.putExtra(CharacterSettings.CHARACTER_NAME, characterName);
+        intent.putExtra(CharacterSettings.CHARACTER_CLASS, characterClassId);
+        intent.putExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS, saveSettings);
+        startActivityForResult(intent, SAVING_SETTINGS);
+    }
+
+
 
 }
