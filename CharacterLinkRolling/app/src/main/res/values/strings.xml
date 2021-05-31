@@ -36,5 +36,7 @@
         "Produced by: Catherine Thomsen \n"
         "Images from: materialdesignicons.com/"
     </string>
+    <string name="modifierPrompt">Modifier:</string>
+    <string name="modifierHint">0</string>
 
 </resources>

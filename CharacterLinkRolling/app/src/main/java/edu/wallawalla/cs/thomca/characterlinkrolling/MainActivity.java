@@ -3,7 +3,6 @@ package edu.wallawalla.cs.thomca.characterlinkrolling;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -50,16 +49,14 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.add(R.id.main_fragment_container, mainFragment);
             fragmentTransaction.commit();
         }
+
         // Replace MainFragment if state saved when going from portrait to landscape
         if (savedInstanceState != null && savedInstanceState.getInt(KEY_CHARACTER_CLASS) != 0) {
             characterClassId = savedInstanceState.getInt(KEY_CHARACTER_CLASS);
             diceCount = savedInstanceState.getInt(KEY_DICE_COUNT);
             diceSides = savedInstanceState.getInt(KEY_DICE_SIDES);
             modifier = savedInstanceState.getInt(KEY_MODIFIER);
-            mainFragment = mainFragment.newInstance(characterClassId, diceCount, diceSides, modifier);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_fragment_container, mainFragment)
-                    .commit();
+            setUpMainFragmentDisplay();
         }
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
@@ -76,11 +73,18 @@ public class MainActivity extends AppCompatActivity
         diceSides = diceS;
         diceCount = diceN;
     }
+    public void setUpMainFragmentDisplay(){
+        mainFragment = mainFragment.newInstance(characterClassId, diceCount, diceSides, modifier);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment_container, mainFragment)
+                .commit();
+    }
 
     public void openCharacter(Character character){
         characterClassId = character.getCharClass();
         characterName = character.getName();
         saveSettings = character.getSaveSet();
+        setUpMainFragmentDisplay();
     }
 
     // rolling the dice
@@ -110,12 +114,14 @@ public class MainActivity extends AppCompatActivity
         outState.putInt(KEY_DICE_SIDES, diceSides);
         outState.putInt(KEY_MODIFIER, modifier);
     }
+
     // options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
         return true;
     }
+
     // handling menu calls
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -144,7 +150,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -154,12 +159,8 @@ public class MainActivity extends AppCompatActivity
             saveSettings = data.getStringExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS);
         }
         //update main fragment
-        mainFragment = mainFragment.newInstance(characterClassId, diceCount, diceSides, modifier);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_fragment_container, mainFragment)
-                .commit();
+        setUpMainFragmentDisplay();
     }
-
 
     // character settings button
     public void saveCharacterSettings(View view) {
@@ -169,7 +170,5 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS, saveSettings);
         startActivityForResult(intent, SAVING_SETTINGS);
     }
-
-
 
 }

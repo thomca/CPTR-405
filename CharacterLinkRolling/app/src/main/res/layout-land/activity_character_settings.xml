@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/landscape_indent"
-        android:layout_marginTop="@dimen/landscape_indent"
+        android:layout_marginTop="@dimen/standard_indent"
         android:layout_marginBottom="@dimen/standard_indent"
         android:layout_marginStart="@dimen/landscape_indent"
         android:text="@string/characterClassLabel"
@@ -51,7 +51,7 @@
         android:layout_marginRight="@dimen/landscape_indent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@id/characterClass"
-        />
+        android:layout_marginEnd="@dimen/landscape_indent" />
     <TextView
         android:id="@+id/sharingStatus"
         android:layout_width="wrap_content"
@@ -73,7 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/landscape_indent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@id/sharingStatus"/>
+        app:layout_constraintBaseline_toBaselineOf="@id/sharingStatus"
+        android:layout_marginEnd="@dimen/landscape_indent" />
 
     <TextView
         android:id="@+id/diceToCharacter"
