@@ -23,7 +23,7 @@ public class CharacterSettings extends AppCompatActivity {
     public static boolean saveBasedClass;
     public static String saveState;
     public static String characterName;
-    public static int characterClass;
+    public static int characterClass = R.string.classNull;
     public static boolean activeCharacter = false;
     public static long characterID;
     private Character character;
