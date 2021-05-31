@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/characterName"
         android:layout_marginLeft="@dimen/landscape_indent"
-        android:layout_marginTop="@dimen/landscape_indent"
+        android:layout_marginTop="@dimen/standard_indent"
         android:layout_marginStart="@dimen/landscape_indent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,9 +106,19 @@
         android:layout_marginRight="@dimen/landscape_indent"
         android:layout_marginTop="@dimen/standard_indent"
         android:text="@string/characterButton"
-        android:onClick="onFinishButtonSelected"
+        android:onClick="onFinishButtonSelectedUpdate"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diceToCharacter" />
 
+    <Button
+        android:id="@+id/newCharacter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/landscape_indent"
+        android:layout_marginRight="@dimen/landscape_indent"
+        android:text="@string/newCharacter"
+        android:onClick="onFinishButtonSelectedNew"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/finishSettings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

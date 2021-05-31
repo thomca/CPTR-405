@@ -16,20 +16,22 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity
     implements MainFragment.InteractionListener, SelectCharacterPopUp.PopInteractionListener{
 
-    private int characterClassId = R.string.classNull;
-    private String characterName;
-    private String saveSettings;
-    private final int SAVING_SETTINGS = 0;
-    private final String KEY_CHARACTER_CLASS = "Character Class";
-    private final String KEY_CHARACTER_NAME = "Character Name";
     private final String KEY_SAVE_STATE = "Save State";
+    private final String KEY_ACTIVE_CHARACTER = "Character Active";
+    private final String KEY_CHARACTER_ID = "character id";
     private final String KEY_DICE_SIDES = "Number of sides";
     private final String KEY_DICE_COUNT = "Number of dice";
     private final String KEY_MODIFIER = "Modifier";
+    private int characterClassId = R.string.classNull;
+    private String saveSettings;
+    private final int SAVING_SETTINGS = 0;
     private int diceSides = 10;
     private int diceCount = 5;
     private int modifier = 0;
     private CharactersDatabase mCharactersDatabase;
+    private boolean activeCharacter = false;
+    private long characterID = -1;
+    private Character mCharacter;
     MainFragment mainFragment;
 
     @Override
@@ -51,8 +53,13 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Replace MainFragment if state saved when going from portrait to landscape
-        if (savedInstanceState != null && savedInstanceState.getInt(KEY_CHARACTER_CLASS) != 0) {
-            characterClassId = savedInstanceState.getInt(KEY_CHARACTER_CLASS);
+        if (savedInstanceState != null) {
+            activeCharacter = savedInstanceState.getBoolean(KEY_ACTIVE_CHARACTER);
+            if(activeCharacter) {
+                characterID = savedInstanceState.getLong(KEY_CHARACTER_ID);
+                mCharacter = mCharactersDatabase.characterDao().getCharacter(characterID);
+                characterClassId = mCharacter.getCharClass();
+            }
             diceCount = savedInstanceState.getInt(KEY_DICE_COUNT);
             diceSides = savedInstanceState.getInt(KEY_DICE_SIDES);
             modifier = savedInstanceState.getInt(KEY_MODIFIER);
@@ -61,12 +68,6 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-    }
-
-    public void onCharacterInteraction(int classId, String charName, String saveSet){
-        characterClassId = classId;
-        characterName = charName;
-        saveSettings = saveSet;
     }
 
     public void  updateDiceVals(int diceN, int diceS){
@@ -81,14 +82,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void openCharacter(Character character){
+        mCharacter = character;
+        characterID = character.getId();
+        activeCharacter = true;
+
         characterClassId = character.getCharClass();
-        characterName = character.getName();
         saveSettings = character.getSaveSet();
         setUpMainFragmentDisplay();
     }
-
-    // rolling the dice
-    public void onRollDiceClick(View view){ rollTheDice(); }
 
     // roll function
     public void rollTheDice(){
@@ -107,12 +108,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_CHARACTER_CLASS,characterClassId);
-        outState.putString(KEY_CHARACTER_NAME,characterName);
         outState.putString(KEY_SAVE_STATE,saveSettings);
         outState.putInt(KEY_DICE_COUNT, diceCount);
         outState.putInt(KEY_DICE_SIDES, diceSides);
         outState.putInt(KEY_MODIFIER, modifier);
+        outState.putBoolean(KEY_ACTIVE_CHARACTER, activeCharacter);
+        outState.putLong(KEY_CHARACTER_ID, characterID);
     }
 
     // options menu
@@ -154,9 +155,12 @@ public class MainActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == android.app.Activity.RESULT_OK && requestCode == SAVING_SETTINGS) {
-            characterClassId = data.getIntExtra(CharacterSettings.CHARACTER_CLASS, R.string.classNull);
-            characterName = data.getStringExtra(CharacterSettings.CHARACTER_NAME);
-            saveSettings = data.getStringExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS);
+            activeCharacter = data.getBooleanExtra(CharacterSettings.ACTIVE_CHARACTER,true);
+            characterID = data.getLongExtra(CharacterSettings.CHARACTER_ID,-1);
+            mCharacter = mCharactersDatabase.characterDao().getCharacter(characterID);
+
+            characterClassId = mCharacter.getCharClass();
+            saveSettings = mCharacter.getSaveSet();
         }
         //update main fragment
         setUpMainFragmentDisplay();
@@ -165,9 +169,8 @@ public class MainActivity extends AppCompatActivity
     // character settings button
     public void saveCharacterSettings(View view) {
         Intent intent = new Intent(view.getContext(), CharacterSettings.class);
-        intent.putExtra(CharacterSettings.CHARACTER_NAME, characterName);
-        intent.putExtra(CharacterSettings.CHARACTER_CLASS, characterClassId);
-        intent.putExtra(CharacterSettings.CHARACTER_SAVE_SETTINGS, saveSettings);
+        intent.putExtra(CharacterSettings.ACTIVE_CHARACTER, activeCharacter);
+        intent.putExtra(CharacterSettings.CHARACTER_ID, characterID);
         startActivityForResult(intent, SAVING_SETTINGS);
     }
 

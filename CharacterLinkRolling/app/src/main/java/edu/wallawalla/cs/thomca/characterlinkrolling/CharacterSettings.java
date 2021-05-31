@@ -3,11 +3,13 @@ package edu.wallawalla.cs.thomca.characterlinkrolling;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,31 +17,48 @@ import android.widget.Toast;
 
 public class CharacterSettings extends AppCompatActivity {
 
-    public static final String CHARACTER_NAME = "Character Name";
-    public static final String CHARACTER_CLASS = "Character Class";
-    public static final String CHARACTER_SAVE_SETTINGS = "Save Settings";
+    public static final String ACTIVE_CHARACTER = "Character Active";
+    public static final String CHARACTER_ID = "Character ID";
     public static boolean saveBasedName;
     public static boolean saveBasedClass;
     public static String saveState;
     public static String characterName;
     public static int characterClass;
+    public static boolean activeCharacter = false;
+    public static long characterID;
+    private Character character;
     private EditText characterNameEditText;
+    private CharactersDatabase mCharactersDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_settings);
+        mCharactersDatabase = CharactersDatabase.getInstance(this);
 
         // Get the character info from MainActivity
         Intent intent = getIntent();
-        characterName = intent.getStringExtra(CHARACTER_NAME);
-        saveState = intent.getStringExtra(CHARACTER_SAVE_SETTINGS);
-        characterClass = intent.getIntExtra(CHARACTER_CLASS, R.string.classNull);
+        activeCharacter = intent.getBooleanExtra(ACTIVE_CHARACTER,false);
+        if(!activeCharacter){
+            Button updateButton = (Button) findViewById(R.id.finishSettings);
+            updateButton.setVisibility(View.GONE);
+        }
+        else{
+            characterID = intent.getLongExtra(CHARACTER_ID, characterID);
+            character = mCharactersDatabase.characterDao().getCharacter(characterID);
+
+            characterName = character.getName();
+            saveState = character.getSaveSet();
+            characterClass = character.getCharClass();
+        }
+
+
 
         Spinner characterClassSpinner = findViewById(R.id.classSpinner);
         SwitchCompat shareBetweenClassSwitch = findViewById(R.id.sharingStatusClassSwitch);
         SwitchCompat saveDiceWCharacterSwitch = findViewById(R.id.saveDiceToCharacterSwitch);
         characterNameEditText = findViewById(R.id.characterNameEditText);
+
 
         //preset switches
         if(saveState != null){
@@ -122,11 +141,29 @@ public class CharacterSettings extends AppCompatActivity {
             }
         });
         //add Text Watcher to store character name
-
     }
 
-    //click finish
-    public void onFinishButtonSelected(android.view.View v){
+    //click Update
+    public void onFinishButtonSelectedUpdate(android.view.View v){
+        // Update character info
+        UpdateForSave();
+        mCharactersDatabase.characterDao().updateCharacter(character);
+        returnResults(v);
+    }
+
+    //click New Character
+    public void onFinishButtonSelectedNew(android.view.View v){
+        character = new Character(characterName,characterClass,saveState);
+        activeCharacter = true;
+        UpdateForSave();
+        long newID = mCharactersDatabase.characterDao().insertCharacter(character);
+        character.setId(newID);
+        characterID = newID;
+        returnResults(v);
+    }
+
+    public void UpdateForSave(){
+        characterName = characterNameEditText.getText().toString();
         //set up bool return
         if(saveBasedClass){
             saveState = "T";
@@ -140,13 +177,15 @@ public class CharacterSettings extends AppCompatActivity {
         else{
             saveState = saveState + "F";
         }
+        character.setSaveSet(saveState);
+        character.setCharClass(characterClass);
+        character.setName(characterName);
+    }
 
-        characterName = characterNameEditText.getText().toString();
-
+    public void returnResults(android.view.View v){
         Intent intent = new Intent();
-        intent.putExtra(CHARACTER_SAVE_SETTINGS,saveState);
-        intent.putExtra(CHARACTER_NAME,characterName);
-        intent.putExtra(CHARACTER_CLASS,characterClass);
+        intent.putExtra(ACTIVE_CHARACTER,activeCharacter);
+        intent.putExtra(CHARACTER_ID,characterID);
         setResult(RESULT_OK, intent);
         finish();
     }

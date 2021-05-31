@@ -84,17 +84,24 @@
         app:layout_constraintLeft_toLeftOf="@id/sharingStatusClassSwitch"
         app:layout_constraintBaseline_toBaselineOf="@id/diceToCharacter"/>
 
-
     <Button
         android:id="@+id/finishSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_indent"
         android:text="@string/characterButton"
-        android:onClick="onFinishButtonSelected"
+        android:onClick="onFinishButtonSelectedUpdate"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diceToCharacter" />
 
-
+    <Button
+        android:id="@+id/newCharacter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_indent"
+        android:text="@string/newCharacter"
+        android:onClick="onFinishButtonSelectedNew"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/finishSettings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
