@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,16 +56,6 @@ public class SelectCharacterPopUp  extends DialogFragment {
         return view;
     }
 
-//    @Override
-//    public void onResume(){
-//        // Sets the height and the width of the DialogFragment
-//        int width = FrameLayout.LayoutParams.MATCH_PARENT;
-//        int height = FrameLayout.LayoutParams.MATCH_PARENT;
-//        getDialog().getWindow().setLayout(width, height);
-//
-//        super.onResume();
-//    }
-
     // load characters from database
     private List<Character> loadCharacters() {
         return mCharactersDatabase.characterDao().getCharacters();
@@ -73,24 +64,36 @@ public class SelectCharacterPopUp  extends DialogFragment {
             implements View.OnClickListener {
 
         private TextView mTextView;
+        private ImageView mTrashCan;
 
         public CharacterHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.character_name, parent, false));
             itemView.setOnClickListener(this);
             mTextView = itemView.findViewById(R.id.characterNameTab);
+            mTrashCan = itemView.findViewById(R.id.deleteCharacter);
+            mTrashCan.setOnClickListener(this);
         }
 
         public void bind(Character character, int position) {
             mTextView.setText(character.getName());
+            mTrashCan.setTag(character.getId());
         }
 
         @Override
         public void onClick(View view) {
             // Return the selected character
-            TextView textView = view.findViewById(R.id.characterNameTab);
-            String name = textView.getText().toString();
-            Character character = mCharactersDatabase.characterDao().getCharacterByName(name);
-            mListener.openCharacter(character);
+            if(view == itemView) {
+                TextView textView = view.findViewById(R.id.characterNameTab);
+                String name = textView.getText().toString();
+                Character character = mCharactersDatabase.characterDao().getCharacterByName(name);
+                mListener.openCharacter(character);
+            }
+            else if(view == mTrashCan){
+                Character character = mCharactersDatabase.characterDao().getCharacter((Long) view.getTag());
+                mCharactersDatabase.characterDao().deleteCharacter(character);
+                // FIX ME!!!!
+                characterAdapter.removeCharacter(character);
+            }
         }
     }
 
@@ -117,6 +120,18 @@ public class SelectCharacterPopUp  extends DialogFragment {
         @Override
         public int getItemCount() {
             return mCharacterList.size();
+        }
+
+        public void removeCharacter(Character character) {
+            // Find subject in the list
+            int index = mCharacterList.indexOf(character);
+            if (index >= 0) {
+                // Remove the subject
+                mCharacterList.remove(index);
+
+                // Notify adapter of subject removal
+                notifyItemRemoved(index);
+            }
         }
     }
 
