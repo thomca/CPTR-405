@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.reflect.Modifier;
 
 
 public class MainFragment extends Fragment implements View.OnClickListener {
@@ -37,6 +42,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         void updateDiceVals(int diceN, int diceS);
         void rollTheDice();
         void saveCharacterSettings(View view);
+        void updateModifier(int modifier);
     }
 
     public MainFragment() {
@@ -110,6 +116,30 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         rollButton.setTag(2);
         ImageView icon = mRoot.findViewById(R.id.classImage);
         icon.setTag(3);
+        TextView modifierView = mRoot.findViewById(R.id.modifierField);
+        modifierView.setTag(4);
+        modifierView.setText(String.valueOf(mModifier));
+
+        modifierView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() != 0){
+                    mModifier = Integer.parseInt(s.toString());
+                }
+                else {
+                    mModifier = 0;
+                }
+                mListener.updateModifier(mModifier);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         //tracking seek bar for dice count
         diceCountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

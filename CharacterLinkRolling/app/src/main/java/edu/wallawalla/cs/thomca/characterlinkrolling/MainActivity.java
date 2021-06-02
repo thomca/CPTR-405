@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity
     private final int SAVING_SETTINGS = 0;
     private int diceSides = 10;
     private int diceCount = 5;
-    private int modifier = 0;
+    private int mModifier = 0;
     private CharactersDatabase mCharactersDatabase;
     private boolean activeCharacter = false;
     private long characterID = -1;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
             }
             diceCount = savedInstanceState.getInt(KEY_DICE_COUNT);
             diceSides = savedInstanceState.getInt(KEY_DICE_SIDES);
-            modifier = savedInstanceState.getInt(KEY_MODIFIER);
+            mModifier = savedInstanceState.getInt(KEY_MODIFIER);
             setUpMainFragmentDisplay();
         }
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         diceCount = diceN;
     }
     public void setUpMainFragmentDisplay(){
-        mainFragment = mainFragment.newInstance(characterClassId, diceCount, diceSides, modifier);
+        mainFragment = mainFragment.newInstance(characterClassId, diceCount, diceSides, mModifier);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment_container, mainFragment)
                 .commit();
@@ -94,6 +94,9 @@ public class MainActivity extends AppCompatActivity
     public void openAction (Action action){
 
     }
+    public void updateModifier(int modifier){
+        mModifier = modifier;
+    }
 
     // roll function
     public void rollTheDice(){
@@ -104,7 +107,8 @@ public class MainActivity extends AppCompatActivity
             currentRoll = randomNumGenerator.nextInt(diceSides) + 1;
             finalRoll = finalRoll + currentRoll;
         }
-        String item = String.valueOf(finalRoll);
+        currentRoll = finalRoll + mModifier;
+        String item = finalRoll + " + " + mModifier + " = " + currentRoll;
         Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
     }
 
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         outState.putString(KEY_SAVE_STATE,saveSettings);
         outState.putInt(KEY_DICE_COUNT, diceCount);
         outState.putInt(KEY_DICE_SIDES, diceSides);
-        outState.putInt(KEY_MODIFIER, modifier);
+        outState.putInt(KEY_MODIFIER, mModifier);
         outState.putBoolean(KEY_ACTIVE_CHARACTER, activeCharacter);
         outState.putLong(KEY_CHARACTER_ID, characterID);
     }
