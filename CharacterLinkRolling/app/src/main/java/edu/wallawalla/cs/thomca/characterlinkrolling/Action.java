@@ -25,12 +25,17 @@ public class Action {
     @ColumnInfo(name = "modifier")
     private int mModifier;
 
+    @NonNull
+    @ColumnInfo(name = "name")
+    private String mActionName;
+
     public Action() {}
 
-    public Action(int sides, int count, int mod) {
+    public Action(int sides, int count, int mod, String name) {
         mModifier = mod;
         mNumSides = sides;
         mDiceCount = count;
+        mActionName = name;
     }
 
     public long getId(){
@@ -56,5 +61,11 @@ public class Action {
     }
     public void setDiceCount(int count){
         mDiceCount = count;
+    }
+    public String getActionName(){
+        return mActionName;
+    }
+    public void setActionName(String name){
+        mActionName = name;
     }
 }

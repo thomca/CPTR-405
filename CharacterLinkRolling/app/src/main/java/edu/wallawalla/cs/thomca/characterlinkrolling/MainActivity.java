@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
-    implements MainFragment.InteractionListener, SelectCharacterPopUp.PopInteractionListener{
+    implements MainFragment.InteractionListener, SelectCharacterPopUp.PopInteractionListener, SelectActionPopUp.PopDiceInteractionListener{
 
     private final String KEY_SAVE_STATE = "Save State";
     private final String KEY_ACTIVE_CHARACTER = "Character Active";
@@ -91,6 +91,10 @@ public class MainActivity extends AppCompatActivity
         setUpMainFragmentDisplay();
     }
 
+    public void openAction (Action action){
+
+    }
+
     // roll function
     public void rollTheDice(){
         Random randomNumGenerator = new Random();
@@ -128,9 +132,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         // Determine which menu option was chosen
-        if (item.getItemId() == R.id.rollDiceInMenu) {
-            // roll selected
-            rollTheDice();
+        if (item.getItemId() == R.id.selectDiceInMenu) {
+            // select dice
+            FragmentManager manager = getSupportFragmentManager();
+            SelectActionPopUp dialog = new SelectActionPopUp();
+            dialog.show(manager, "selectActionPopUp");
             return true;
         }
         else if (item.getItemId() == R.id.creditsScreen) {
@@ -172,6 +178,10 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(CharacterSettings.ACTIVE_CHARACTER, activeCharacter);
         intent.putExtra(CharacterSettings.CHARACTER_ID, characterID);
         startActivityForResult(intent, SAVING_SETTINGS);
+    }
+
+    public Character getCharacter(){
+        return mCharacter;
     }
 
 }

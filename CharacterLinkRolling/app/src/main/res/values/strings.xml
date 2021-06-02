@@ -4,6 +4,8 @@
     <string name="greeting">Welcome!</string>
     <string name="diceCountBarLabel">How many actions would you like to use?</string>
     <string name="diceSideBarLabel">How many dice sides?</string>
+    <string name="modifierPrompt">Modifier:</string>
+    <string name="modifierHint">0</string>
     <string name="rollDice">Roll</string>
     <string name="characterButton">Update Character</string>
     <string name="newCharacter">New Character</string>
@@ -37,7 +39,7 @@
         "Produced by: Catherine Thomsen \n"
         "Images from: materialdesignicons.com/"
     </string>
-    <string name="modifierPrompt">Modifier:</string>
-    <string name="modifierHint">0</string>
+
+    <string name="select_dice">Select dice</string>
 
 </resources>

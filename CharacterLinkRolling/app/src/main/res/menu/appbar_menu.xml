@@ -6,8 +6,8 @@
         android:icon="@drawable/character"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/rollDiceInMenu"
-        android:title="@string/rollDice"
+    <item android:id="@+id/selectDiceInMenu"
+        android:title="@string/select_dice"
         android:icon="@drawable/rolldiceicon"
         app:showAsAction="ifRoom"/>
 

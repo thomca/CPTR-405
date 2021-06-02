@@ -10,13 +10,16 @@ import androidx.room.Update;
 @Dao
 public interface ActionDao {
     @Query("SELECT * FROM `Action` WHERE id = :id")
-    public Action getDice(int id);
+    public Action getDice(long id);
 
     @Query("SELECT * FROM `Action` WHERE sides = :side")
     public Action getDiceBySides(int side);
 
     @Query("SELECT * FROM `Action` WHERE modifier = :val")
     public Action getDiceByMod(int val);
+
+    @Query("SELECT * FROM `Action` WHERE modifier = :name")
+    public Action getActionByName(String name);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public long insertAction(Action die);

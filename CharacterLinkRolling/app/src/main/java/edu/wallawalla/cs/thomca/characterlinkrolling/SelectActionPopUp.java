@@ -14,33 +14,37 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class SelectCharacterPopUp  extends DialogFragment {
+public class SelectActionPopUp extends DialogFragment {
     private CharactersDatabase mCharactersDatabase;
     private RecyclerView mRecyclerView;
-    private CharacterAdapter characterAdapter;
-    private SelectCharacterPopUp.PopInteractionListener mListener;
+    private ActionAdapter actionAdapter;
+    private PopDiceInteractionListener mListener;
     private MainActivity mHost;
 
     // activity listener
-    public interface PopInteractionListener {
-        void openCharacter(Character character);
+    public interface PopDiceInteractionListener {
+        void openAction(Action action);
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle(R.string.namesTitle);
+        builder.setTitle("Actions");
         mCharactersDatabase = CharactersDatabase.getInstance(getContext());
-
         builder.setView(R.layout.selection_menu_popup);
-        mRecyclerView = new RecyclerView(getContext());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        characterAdapter = new CharacterAdapter(loadCharacters());
-        mRecyclerView.setAdapter(characterAdapter);
-        builder.setView(mRecyclerView);
+        Character character = mHost.getCharacter();
+        if(character != null){
+            mRecyclerView = new RecyclerView(getContext());
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            actionAdapter = new ActionAdapter(loadActions(character));
+            mRecyclerView.setAdapter(actionAdapter);
+            builder.setView(mRecyclerView);
+        }
         return builder.create();
     }
 
@@ -48,25 +52,30 @@ public class SelectCharacterPopUp  extends DialogFragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selection_menu_popup, container, false);
-
         // create a layout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
         return view;
     }
 
-    // load characters from database
-    private List<Character> loadCharacters() {
-        return mCharactersDatabase.characterDao().getCharacters();
+    // load actions from database
+    private List<Action> loadActions(Character character) {
+        List<LinksBase> links = mCharactersDatabase.linksBase().getLinksBase();
+        List<Action> actions = new ArrayList<>();
+        for(LinksBase x:links){
+            if(x.getCharId() == character.getId() || (x.getActClass() == character.getCharClass() && x.getActClass() != R.string.classNull)) {
+                actions.add(mCharactersDatabase.actionDao().getDice(x.getActId()));
+            }
+        }
+        return actions;
     }
-    private class CharacterHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
 
+    private class ActionHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
         private TextView mTextView;
         private ImageView mTrashCan;
 
-        public CharacterHolder(LayoutInflater inflater, ViewGroup parent) {
+        public ActionHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.selection_item, parent, false));
             itemView.setOnClickListener(this);
             mTextView = itemView.findViewById(R.id.itemNameTab);
@@ -74,9 +83,9 @@ public class SelectCharacterPopUp  extends DialogFragment {
             mTrashCan.setOnClickListener(this);
         }
 
-        public void bind(Character character, int position) {
-            mTextView.setText(character.getName());
-            mTrashCan.setTag(character.getId());
+        public void bind(Action action, int position) {
+            mTextView.setText(action.getActionName());
+            mTrashCan.setTag(action.getId());
         }
 
         @Override
@@ -85,49 +94,48 @@ public class SelectCharacterPopUp  extends DialogFragment {
             if(view == itemView) {
                 TextView textView = view.findViewById(R.id.itemNameTab);
                 String name = textView.getText().toString();
-                Character character = mCharactersDatabase.characterDao().getCharacterByName(name);
-                mListener.openCharacter(character);
+                // add find by name
+                Action action = mCharactersDatabase.actionDao().getActionByName(name);
+                mListener.openAction(action);
             }
             else if(view == mTrashCan){
-                Character character = mCharactersDatabase.characterDao().getCharacter((Long) view.getTag());
-                mCharactersDatabase.characterDao().deleteCharacter(character);
-                // FIX ME!!!!
-                characterAdapter.removeCharacter(character);
+                //FIXME delete item
             }
         }
+
     }
 
-    private class CharacterAdapter extends RecyclerView.Adapter<CharacterHolder> {
+    private class ActionAdapter extends RecyclerView.Adapter<ActionHolder> {
 
-        private List<Character> mCharacterList;
+        private List<Action> mActionList;
 
-        public CharacterAdapter(List<Character> characters) {
-            mCharacterList = characters;
+        public ActionAdapter(List<Action> actions) {
+            mActionList = actions;
         }
 
         @NonNull
         @Override
-        public CharacterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ActionHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return new CharacterHolder(layoutInflater, parent);
+            return new ActionHolder(layoutInflater, parent);
         }
 
         @Override
-        public void onBindViewHolder(CharacterHolder holder, int position){
-            holder.bind(mCharacterList.get(position), position);
+        public void onBindViewHolder(ActionHolder holder, int position){
+            holder.bind(mActionList.get(position), position);
         }
 
         @Override
         public int getItemCount() {
-            return mCharacterList.size();
+            return mActionList.size();
         }
 
-        public void removeCharacter(Character character) {
+        public void removeAction(Action action) {
             // Find subject in the list
-            int index = mCharacterList.indexOf(character);
+            int index = mActionList.indexOf(action);
             if (index >= 0) {
                 // Remove the subject
-                mCharacterList.remove(index);
+                mActionList.remove(index);
 
                 // Notify adapter of subject removal
                 notifyItemRemoved(index);
@@ -135,12 +143,13 @@ public class SelectCharacterPopUp  extends DialogFragment {
         }
     }
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof MainActivity) {
             mHost = (MainActivity) context;
-            mListener = (SelectCharacterPopUp.PopInteractionListener) context;
+            mListener = (PopDiceInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement MainActivity");
@@ -153,4 +162,5 @@ public class SelectCharacterPopUp  extends DialogFragment {
         mHost = null;
         mListener = null;
     }
+
 }

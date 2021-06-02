@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/standard_indent"
-        android:id="@+id/characterNameTab"
+        android:id="@+id/itemNameTab"
         android:layout_gravity="left"
         android:gravity="left"
         android:layout_weight="0.5"
@@ -18,7 +18,7 @@
     </TextView>
 
     <ImageView
-        android:id="@+id/deleteCharacter"
+        android:id="@+id/deleteItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/delete"
