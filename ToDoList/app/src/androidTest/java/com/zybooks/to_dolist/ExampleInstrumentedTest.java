@@ -1,26 +1,31 @@
 package com.zybooks.to_dolist;
 
 import android.content.Context;
-
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import java.io.File;
 import static org.junit.Assert.*;
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
+    public void testFileSaved() throws Exception {
+        // Get Context for the application being instrumented
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.zybooks.to_dolist", appContext.getPackageName());
+
+        // Delete the file in case it exists
+        File file = new File(appContext.getFilesDir(), ToDoList.FILENAME);
+        file.delete();
+        assertFalse(file.exists());
+
+        // Save the file
+        ToDoList list = new ToDoList(appContext);
+        list.saveToFile();
+
+        // Make sure the file now exists
+        assertTrue(file.exists());
     }
 }
