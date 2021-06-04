@@ -43,6 +43,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         void rollTheDice();
         void saveCharacterSettings(View view);
         void updateModifier(int modifier);
+        void saveAction();
     }
 
     public MainFragment() {
@@ -119,6 +120,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         TextView modifierView = mRoot.findViewById(R.id.modifierField);
         modifierView.setTag(4);
         modifierView.setText(String.valueOf(mModifier));
+        Button saveActionButton = mRoot.findViewById(R.id.saveActionButton);
+        saveActionButton.setTag(5);
+        if(characterClassId == R.string.classNull){
+            saveActionButton.setVisibility(View.GONE);
+        }
 
         modifierView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -145,7 +151,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         diceCountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // progress ranges from 0 to max
+                // progress ranges from 1 to max
             }
 
             @Override
@@ -165,7 +171,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         diceSidesSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // progress ranges from 0 to max
+                // progress ranges from 1 to max
             }
 
             @Override
@@ -184,6 +190,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         characterButton.setOnClickListener(this);
         rollButton.setOnClickListener(this);
         icon.setOnClickListener(this);
+        saveActionButton.setOnClickListener(this);
 
         return mRoot;
     }
@@ -216,7 +223,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        // characterButton = 1, rollButton = 2 icon = 3
+        // characterButton = 1, rollButton = 2, icon = 3, saveAction = 5
         if (view.getTag() == (Object) 1){
             onCharacterSettingsClick(view);
         }
@@ -225,6 +232,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
         if (view.getTag() == (Object) 3){
             animateIcon(view);
+        }
+        if (view.getTag() == (Object) 5){
+            mListener.saveAction();
         }
     }
 

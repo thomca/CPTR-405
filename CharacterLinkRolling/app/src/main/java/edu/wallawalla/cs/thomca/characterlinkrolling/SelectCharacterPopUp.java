@@ -67,7 +67,7 @@ public class SelectCharacterPopUp  extends DialogFragment {
         private ImageView mTrashCan;
 
         public CharacterHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.selection_item, parent, false));
+            super(inflater.inflate(R.layout.selection_character, parent, false));
             itemView.setOnClickListener(this);
             mTextView = itemView.findViewById(R.id.itemNameTab);
             mTrashCan = itemView.findViewById(R.id.deleteItem);

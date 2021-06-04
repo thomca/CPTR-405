@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
     private final String KEY_DICE_COUNT = "Number of dice";
     private final String KEY_MODIFIER = "Modifier";
     private int characterClassId = R.string.classNull;
-    private String saveSettings;
+    private boolean saveSettings = false;
     private final int SAVING_SETTINGS = 0;
     private int diceSides = 10;
     private int diceCount = 5;
@@ -92,8 +92,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void openAction (Action action){
-
+        diceSides = action.getNumSides();
+        diceCount = action.getDiceCount();
+        mModifier = action.getModifier();
+        setUpMainFragmentDisplay();
     }
+
+    public void saveAction(){
+        //FIXME add save action, request name and store based on save settings
+        FragmentManager manager = getSupportFragmentManager();
+        EditOrSaveAction dialog = new EditOrSaveAction();
+        dialog.show(manager, "Save Action");
+    }
+
     public void updateModifier(int modifier){
         mModifier = modifier;
     }
@@ -116,7 +127,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(KEY_SAVE_STATE,saveSettings);
+        outState.putBoolean(KEY_SAVE_STATE,saveSettings);
         outState.putInt(KEY_DICE_COUNT, diceCount);
         outState.putInt(KEY_DICE_SIDES, diceSides);
         outState.putInt(KEY_MODIFIER, mModifier);

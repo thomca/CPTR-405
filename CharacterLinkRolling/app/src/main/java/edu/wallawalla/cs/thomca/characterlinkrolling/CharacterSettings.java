@@ -19,9 +19,7 @@ public class CharacterSettings extends AppCompatActivity {
 
     public static final String ACTIVE_CHARACTER = "Character Active";
     public static final String CHARACTER_ID = "Character ID";
-    public static boolean saveBasedName;
-    public static boolean saveBasedClass;
-    public static String saveState;
+    public static boolean saveState = false;
     public static String characterName;
     public static int characterClass = R.string.classNull;
     public static boolean activeCharacter = false;
@@ -56,27 +54,11 @@ public class CharacterSettings extends AppCompatActivity {
 
         Spinner characterClassSpinner = findViewById(R.id.classSpinner);
         SwitchCompat shareBetweenClassSwitch = findViewById(R.id.sharingStatusClassSwitch);
-        SwitchCompat saveDiceWCharacterSwitch = findViewById(R.id.saveDiceToCharacterSwitch);
         characterNameEditText = findViewById(R.id.characterNameEditText);
 
 
         //preset switches
-        if(saveState != null){
-            if(saveState.charAt(0) == 'T'){
-                saveBasedClass = true;
-            }
-            else {
-                saveBasedClass = false;
-            }
-            if(saveState.charAt(1) == 'T'){
-                saveBasedName = true;
-            }
-            else {
-                saveBasedName = false;
-            }
-            shareBetweenClassSwitch.setChecked(saveBasedClass);
-            saveDiceWCharacterSwitch.setChecked(saveBasedName);
-        }
+            shareBetweenClassSwitch.setChecked(saveState);
         // set character name
         if(characterName != null){
             characterNameEditText.setText(characterName);
@@ -119,28 +101,9 @@ public class CharacterSettings extends AppCompatActivity {
         //switch for sharing dice between characters of the same class
         shareBetweenClassSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // on
-                    saveBasedClass = true;
-                } else {
-                    // off
-                    saveBasedClass = false;
-                }
+                saveState = isChecked;
             }
         });
-        //switch to tag dice to this character
-        saveDiceWCharacterSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // on
-                    saveBasedName = true;
-                } else {
-                    // off
-                    saveBasedName = false;
-                }
-            }
-        });
-        //add Text Watcher to store character name
     }
 
     //click Update
@@ -164,19 +127,6 @@ public class CharacterSettings extends AppCompatActivity {
 
     public void UpdateForSave(){
         characterName = characterNameEditText.getText().toString();
-        //set up bool return
-        if(saveBasedClass){
-            saveState = "T";
-        }
-        else {
-            saveState = "F";
-        }
-        if(saveBasedName){
-            saveState = saveState + "T";
-        }
-        else{
-            saveState = saveState + "F";
-        }
         character.setSaveSet(saveState);
         character.setCharClass(characterClass);
         character.setName(characterName);

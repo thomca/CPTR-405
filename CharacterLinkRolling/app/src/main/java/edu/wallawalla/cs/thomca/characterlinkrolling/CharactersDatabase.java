@@ -34,14 +34,14 @@ public abstract class CharactersDatabase extends RoomDatabase{
             runInTransaction(new Runnable() {
                 @Override
                 public void run() {
-                    Character character = new Character("Steven West", R.string.classFighter, "FF");
+                    Character character = new Character("Steven West", R.string.classFighter, false);
                     Action action = new Action(6, 2, 3, "Base attack");
                     long actionId = actionDao().insertAction(action);
                     long charId = characterDao().insertCharacter(character);
                     LinksBase link = new LinksBase(actionId, charId, R.string.classNull);
                     linksBase().insertLinks(link);
 
-                    character = new Character("Lena Verin", R.string.classCleric, "FF");
+                    character = new Character("Lena Verin", R.string.classCleric, true);
                     action = new Action(20, 1, 5, "Wisdom check");
                     actionId = actionDao().insertAction(action);
                     charId = characterDao().insertCharacter(character);

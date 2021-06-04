@@ -27,6 +27,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diceSides"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:min="1"
         android:max="20"
         android:progress="10" />
 
@@ -52,6 +53,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diceCount"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:min="1"
         android:max="10"
         android:progress="5" />
 
@@ -78,6 +80,16 @@
         android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintLeft_toRightOf="@id/modifierLabel"
+        app:layout_constraintBaseline_toBaselineOf="@id/modifierLabel" />
+
+    <Button
+        android:id="@+id/saveActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/landscape_indent"
+        android:textSize="10sp"
+        android:text="@string/save_action_button"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@id/modifierLabel" />
 
     <Button

@@ -41,5 +41,6 @@
     </string>
 
     <string name="select_dice">Select dice</string>
+    <string name="save_action_button">Save Action</string>
 
 </resources>

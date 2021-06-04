@@ -74,18 +74,23 @@ public class SelectActionPopUp extends DialogFragment {
             implements View.OnClickListener {
         private TextView mTextView;
         private ImageView mTrashCan;
+        private ImageView mEdit;
 
         public ActionHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.selection_item, parent, false));
+            super(inflater.inflate(R.layout.selection_action, parent, false));
             itemView.setOnClickListener(this);
             mTextView = itemView.findViewById(R.id.itemNameTab);
             mTrashCan = itemView.findViewById(R.id.deleteItem);
+            mEdit = itemView.findViewById(R.id.editItem);
             mTrashCan.setOnClickListener(this);
+            mEdit.setOnClickListener(this);
         }
 
         public void bind(Action action, int position) {
             mTextView.setText(action.getActionName());
+            mTextView.setTag(action.getId());
             mTrashCan.setTag(action.getId());
+            mEdit.setTag(action.getId());
         }
 
         @Override
@@ -93,12 +98,15 @@ public class SelectActionPopUp extends DialogFragment {
             // Return the selected character
             if(view == itemView) {
                 TextView textView = view.findViewById(R.id.itemNameTab);
-                String name = textView.getText().toString();
+                long actionId = (long) textView.getTag();
                 // add find by name
-                Action action = mCharactersDatabase.actionDao().getActionByName(name);
+                Action action = mCharactersDatabase.actionDao().getDice(actionId);
                 mListener.openAction(action);
             }
             else if(view == mTrashCan){
+                //FIXME delete item
+            }
+            else if(view == mEdit){
                 //FIXME delete item
             }
         }

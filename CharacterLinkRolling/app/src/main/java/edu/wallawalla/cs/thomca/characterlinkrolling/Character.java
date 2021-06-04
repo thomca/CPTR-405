@@ -18,9 +18,9 @@ public class Character {
     private int mCharClass;
 
     @ColumnInfo(name = "save")
-    private String mSaveSet;
+    private boolean mSaveSet;
 
-    public Character(String name, int charClass, String save) {
+    public Character(String name, int charClass, boolean save) {
         mName = name;
         mCharClass = charClass;
         mSaveSet = save;
@@ -45,10 +45,10 @@ public class Character {
     public void setCharClass(int charClass){
         mCharClass = charClass;
     }
-    public String getSaveSet(){
+    public boolean getSaveSet(){
         return mSaveSet;
     }
-    public void setSaveSet(String save){
+    public void setSaveSet(boolean save){
         mSaveSet = save;
     }
 }

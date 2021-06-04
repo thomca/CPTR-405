@@ -36,6 +36,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diceSides"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:min="1"
         android:max="20"
         android:progress="10" />
 
@@ -61,12 +62,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diceCount"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:min="1"
         android:max="10"
         android:progress="5" />
 
     <TextView
         android:id="@+id/modifierLabel"
-        android:layout_marginLeft="@dimen/large_indent_vertical"
+        android:layout_marginLeft="@dimen/standard_indent"
         android:layout_marginRight="@dimen/standard_indent"
         android:text="@string/modifierPrompt"
         android:textSize="@dimen/section_text_Size"
@@ -74,7 +76,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diceCountBar"
-        android:layout_marginStart="@dimen/large_indent_vertical"
+        android:layout_marginStart="@dimen/standard_indent"
         android:layout_marginEnd="@dimen/standard_indent" />
 
     <EditText
@@ -88,6 +90,16 @@
         android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintLeft_toRightOf="@id/modifierLabel"
+        app:layout_constraintBaseline_toBaselineOf="@id/modifierLabel" />
+
+    <Button
+        android:id="@+id/saveActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_margin="@dimen/standard_indent"
+        android:text="@string/save_action_button"
+        app:layout_constraintLeft_toRightOf="@id/modifierField"
         app:layout_constraintBaseline_toBaselineOf="@id/modifierLabel" />
 
     <Button
