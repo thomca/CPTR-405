@@ -109,10 +109,14 @@ public class SelectActionPopUp extends DialogFragment {
                 mListener.openAction(action);
             }
             else if(view == mTrashCan){
-                //FIXME delete item
+                //check if linkBase updated
+                mAction = mCharactersDatabase.actionDao().getDice((Long) view.getTag());
+                mCharactersDatabase.actionDao().deleteDice(mAction);
+                actionAdapter.removeAction(mAction);
             }
             else if(view == mEdit){
-                //FIXME edit item
+                mAction = mCharactersDatabase.actionDao().getDice((Long) view.getTag());
+                mListener.editAction(mAction);
             }
         }
 
@@ -145,7 +149,13 @@ public class SelectActionPopUp extends DialogFragment {
 
         public void removeAction(Action action) {
             // Find subject in the list
-            int index = mActionList.indexOf(action);
+            int index = -1;
+            for(int i = 0; i < this.getItemCount(); i++){
+                if(mActionList.get(i).getId() == action.getId()){
+                    index = i;
+                    break;
+                }
+            }
             if (index >= 0) {
                 // Remove the subject
                 mActionList.remove(index);

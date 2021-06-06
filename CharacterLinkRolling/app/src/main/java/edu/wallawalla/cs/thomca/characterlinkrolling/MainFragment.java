@@ -102,15 +102,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         mRoot = (ViewGroup) inflater.inflate(R.layout.fragment_main, container, false);
         setClassImage();
         // copied from main activity
         SeekBar diceCountSeekBar = mRoot.findViewById(R.id.diceCountBar);
-        diceCountSeekBar.setProgress(mDiceCount);
+        diceCountSeekBar.setProgress(mDiceCount - 1);
         SeekBar diceSidesSeekBar = mRoot.findViewById(R.id.diceSidesBar);
-        diceSidesSeekBar.setProgress(mDiceSides);
+        diceSidesSeekBar.setProgress(mDiceSides - 1);
         Button characterButton = mRoot.findViewById(R.id.setCharacterButton);
         characterButton.setTag(1);
         Button rollButton = mRoot.findViewById(R.id.rollDiceButton);
@@ -180,7 +179,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mDiceSides = seekBar.getProgress();
+                mDiceSides = seekBar.getProgress() + 1;
                 String item = String.valueOf(mDiceSides);
                 Toast.makeText(mHost, item, Toast.LENGTH_SHORT).show();
                 sendDiceVals();
@@ -241,6 +240,5 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void sendDiceVals(){
         mListener.updateDiceVals(mDiceCount, mDiceSides);
     }
-
 
 }

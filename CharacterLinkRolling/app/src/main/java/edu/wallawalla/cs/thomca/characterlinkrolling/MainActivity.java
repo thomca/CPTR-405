@@ -8,14 +8,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
-    implements MainFragment.InteractionListener, SelectCharacterPopUp.PopInteractionListener, SelectActionPopUp.PopDiceInteractionListener{
+    implements MainFragment.InteractionListener, SelectCharacterPopUp.PopInteractionListener,
+        SelectActionPopUp.PopDiceInteractionListener, EditOrSaveAction.ActionSaveListener{
 
     private final String KEY_SAVE_STATE = "Save State";
     private final String KEY_ACTIVE_CHARACTER = "Character Active";
@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity
     private int characterClassId = R.string.classNull;
     private boolean saveSettings = false;
     private final int SAVING_SETTINGS = 0;
-    private int diceSides = 10;
-    private int diceCount = 5;
+    private int mDiceSides = 10;
+    private int mDiceCount = 5;
     private int mModifier = 0;
     private CharactersDatabase mCharactersDatabase;
     private boolean activeCharacter = false;
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity
                 mCharacter = mCharactersDatabase.characterDao().getCharacter(characterID);
                 characterClassId = mCharacter.getCharClass();
             }
-            diceCount = savedInstanceState.getInt(KEY_DICE_COUNT);
-            diceSides = savedInstanceState.getInt(KEY_DICE_SIDES);
+            mDiceCount = savedInstanceState.getInt(KEY_DICE_COUNT);
+            mDiceSides = savedInstanceState.getInt(KEY_DICE_SIDES);
             mModifier = savedInstanceState.getInt(KEY_MODIFIER);
             setUpMainFragmentDisplay();
         }
@@ -76,11 +76,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void  updateDiceVals(int diceN, int diceS){
-        diceSides = diceS;
-        diceCount = diceN;
+        mDiceSides = diceS;
+        mDiceCount = diceN;
     }
+
     public void setUpMainFragmentDisplay(){
-        mainFragment = mainFragment.newInstance(characterClassId, diceCount, diceSides, mModifier);
+        mainFragment = mainFragment.newInstance(characterClassId, mDiceCount, mDiceSides, mModifier);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment_container, mainFragment)
                 .commit();
@@ -108,31 +109,42 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void openAction (Action action){
-        diceSides = action.getNumSides();
-        diceCount = action.getDiceCount();
+        mDiceSides = action.getNumSides();
+        mDiceCount = action.getDiceCount();
         mModifier = action.getModifier();
         setUpMainFragmentDisplay();
     }
 
     public void saveAction(){
-        //FIXME add save action, request name and store based on save settings
         FragmentManager manager = getSupportFragmentManager();
         EditOrSaveAction dialog = new EditOrSaveAction();
         Bundle args = new Bundle();
         args.putBoolean(KEY_ACTIVE_ACTION, false);
+        args.putInt(KEY_DICE_COUNT, mDiceCount);
+        args.putInt(KEY_DICE_SIDES, mDiceSides);
+        args.putInt(KEY_MODIFIER, mModifier);
         dialog.setArguments(args);
         dialog.show(manager, "Save Action");
     }
 
     public void editAction(Action action){
-        //FIXME save changes to action (See if args work)
         FragmentManager manager = getSupportFragmentManager();
         EditOrSaveAction dialog = new EditOrSaveAction();
         Bundle args = new Bundle();
         args.putBoolean(KEY_ACTIVE_ACTION, true);
         args.putLong(KEY_ACTION, action.getId());
+        args.putInt(KEY_DICE_COUNT, action.getDiceCount());
+        args.putInt(KEY_DICE_SIDES, action.getNumSides());
+        args.putInt(KEY_MODIFIER, action.getModifier());
         dialog.setArguments(args);
         dialog.show(manager, "Save Action");
+    }
+
+    public void updateActionValues(int diceSides, int diceCount, int modifier){
+        mDiceCount = diceCount;
+        mDiceSides = diceSides;
+        mModifier = modifier;
+        setUpMainFragmentDisplay();
     }
 
     public void updateModifier(int modifier){
@@ -144,8 +156,8 @@ public class MainActivity extends AppCompatActivity
         Random randomNumGenerator = new Random();
         int currentRoll;
         int finalRoll = 0;
-        for(int i = 0; i < diceCount; i++){
-            currentRoll = randomNumGenerator.nextInt(diceSides) + 1;
+        for(int i = 0; i < mDiceCount; i++){
+            currentRoll = randomNumGenerator.nextInt(mDiceSides) + 1;
             finalRoll = finalRoll + currentRoll;
         }
         currentRoll = finalRoll + mModifier;
@@ -158,8 +170,8 @@ public class MainActivity extends AppCompatActivity
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_SAVE_STATE,saveSettings);
-        outState.putInt(KEY_DICE_COUNT, diceCount);
-        outState.putInt(KEY_DICE_SIDES, diceSides);
+        outState.putInt(KEY_DICE_COUNT, mDiceCount);
+        outState.putInt(KEY_DICE_SIDES, mDiceSides);
         outState.putInt(KEY_MODIFIER, mModifier);
         outState.putBoolean(KEY_ACTIVE_CHARACTER, activeCharacter);
         outState.putLong(KEY_CHARACTER_ID, characterID);

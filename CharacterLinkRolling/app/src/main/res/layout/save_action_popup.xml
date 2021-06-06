@@ -1,22 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/diceSides"
+        android:id="@+id/ActionNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_name_field"
+        android:textSize="@dimen/section_text_Size"
+        android:layout_marginLeft="@dimen/standard_indent"
+        android:labelFor="@id/ActionNameField"
+        android:layout_marginStart="@dimen/standard_indent" />
+
+    <EditText
+        android:id="@+id/ActionNameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_indent"
+        android:textSize="@dimen/section_text_Size"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/ActionSides"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/diceSideBarLabel"
         android:textSize="@dimen/section_text_Size"
         android:layout_marginLeft="@dimen/standard_indent"
-        android:labelFor="@id/diceSidesBar"
+        android:labelFor="@id/ActionSidesBar"
         android:layout_marginStart="@dimen/standard_indent" />
 
     <SeekBar
-        android:id="@+id/diceSidesBar"
+        android:id="@+id/ActionSidesBar"
         android:layout_margin="@dimen/standard_indent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,18 +44,18 @@
         android:progress="10" />
 
     <TextView
-        android:id="@+id/diceCount"
+        android:id="@+id/ActionCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/standard_indent"
         android:layout_marginRight="@dimen/standard_indent"
         android:text="@string/diceCountBarLabel"
         android:textSize="@dimen/section_text_Size"
-        android:labelFor="@id/diceCountBar"
+        android:labelFor="@id/ActionCountBar"
         />
 
     <SeekBar
-        android:id="@+id/diceCountBar"
+        android:id="@+id/ActionCountBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/standard_indent"
@@ -46,7 +65,7 @@
         android:progress="5" />
 
     <TextView
-        android:id="@+id/modifierLabel"
+        android:id="@+id/ActionModifierLabel"
         android:layout_marginLeft="@dimen/standard_indent"
         android:layout_marginRight="@dimen/standard_indent"
         android:text="@string/modifierPrompt"
@@ -57,7 +76,7 @@
         android:layout_marginEnd="@dimen/standard_indent" />
 
     <EditText
-        android:id="@+id/modifierField"
+        android:id="@+id/ActionModifierField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_indent"
@@ -65,8 +84,13 @@
         android:ems="3"
         android:hint="@string/modifierHint"
         android:importantForAutofill="no"
-        android:inputType="number"
-        app:layout_constraintLeft_toRightOf="@id/modifierLabel"
-        app:layout_constraintBaseline_toBaselineOf="@id/modifierLabel" />
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/ActionSaveActionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_indent"
+        android:text="@string/save_action_button" />
 
 </LinearLayout>

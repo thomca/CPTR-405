@@ -2,8 +2,8 @@
     <!-- main page   -->
     <string name="app_name">Character Link Rolling</string>
     <string name="greeting">Welcome!</string>
-    <string name="diceCountBarLabel">How many actions would you like to use?</string>
-    <string name="diceSideBarLabel">How many dice sides?</string>
+    <string name="diceCountBarLabel">How many dice?</string>
+    <string name="diceSideBarLabel">How many sides per die?</string>
     <string name="modifierPrompt">Modifier:</string>
     <string name="modifierHint">0</string>
     <string name="rollDice">Roll</string>
@@ -42,5 +42,6 @@
 
     <string name="select_dice">Select dice</string>
     <string name="save_action_button">Save Action</string>
+    <string name="action_name_field">Action Name:</string>
 
 </resources>
