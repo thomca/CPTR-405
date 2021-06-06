@@ -21,8 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:min="1"
-        android:max="20"
+        android:max="19"
         android:progress="10" />
 
     <TextView
@@ -43,8 +42,7 @@
         android:layout_marginLeft="@dimen/standard_indent"
         android:layout_marginRight="@dimen/standard_indent"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:min="1"
-        android:max="10"
+        android:max="14"
         android:progress="5" />
 
     <TextView

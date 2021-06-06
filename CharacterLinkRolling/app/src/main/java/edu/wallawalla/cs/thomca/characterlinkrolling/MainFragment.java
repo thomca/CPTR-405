@@ -31,7 +31,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private final static String KEY_DICE_COUNT = "Number of dice";
     private final static String KEY_MODIFIER = "Modifier";
     private int mDiceSides = 10;
-    private int mDiceCount = 5;
+    private int mDiceCount = 8;
     private int mModifier = 0;
     private MainActivity mHost;
     private ViewGroup mRoot;
@@ -151,7 +151,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         diceCountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // progress ranges from 1 to max
+                // progress ranges from 0 to max
             }
 
             @Override
@@ -160,7 +160,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mDiceCount = seekBar.getProgress();
+                mDiceCount = seekBar.getProgress() + 1; // range = [1,1 + max]
                 String item = String.valueOf(mDiceCount);
                 Toast.makeText(mHost, item, Toast.LENGTH_SHORT).show();
                 sendDiceVals();
@@ -171,7 +171,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         diceSidesSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // progress ranges from 1 to max
+                // progress ranges from 0 to max
             }
 
             @Override

@@ -26,6 +26,7 @@ public class SelectCharacterPopUp  extends DialogFragment {
     // activity listener
     public interface PopInteractionListener {
         void openCharacter(Character character);
+        void characterDeleted(long characterId);
     }
 
     @NonNull
@@ -76,23 +77,25 @@ public class SelectCharacterPopUp  extends DialogFragment {
 
         public void bind(Character character, int position) {
             mTextView.setText(character.getName());
+            mTextView.setTag(character.getId());
             mTrashCan.setTag(character.getId());
         }
 
         @Override
         public void onClick(View view) {
             // Return the selected character
+            Character character;
             if(view == itemView) {
                 TextView textView = view.findViewById(R.id.itemNameTab);
-                String name = textView.getText().toString();
-                Character character = mCharactersDatabase.characterDao().getCharacterByName(name);
+                long id = (long) textView.getTag();
+                character = mCharactersDatabase.characterDao().getCharacter(id);
                 mListener.openCharacter(character);
             }
             else if(view == mTrashCan){
-                Character character = mCharactersDatabase.characterDao().getCharacter((Long) view.getTag());
+                character = mCharactersDatabase.characterDao().getCharacter((Long) view.getTag());
                 mCharactersDatabase.characterDao().deleteCharacter(character);
-                // FIX ME!!!!
                 characterAdapter.removeCharacter(character);
+                mListener.characterDeleted(character.getId());
             }
         }
     }
@@ -124,7 +127,13 @@ public class SelectCharacterPopUp  extends DialogFragment {
 
         public void removeCharacter(Character character) {
             // Find subject in the list
-            int index = mCharacterList.indexOf(character);
+            int index = -1;
+            for(int i = 0; i < this.getItemCount(); i++){
+                if(mCharacterList.get(i).getId() == character.getId()){
+                    index = i;
+                    break;
+                }
+            }
             if (index >= 0) {
                 // Remove the subject
                 mCharacterList.remove(index);

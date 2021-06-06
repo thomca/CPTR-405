@@ -24,10 +24,15 @@ public class SelectActionPopUp extends DialogFragment {
     private ActionAdapter actionAdapter;
     private PopDiceInteractionListener mListener;
     private MainActivity mHost;
+    private final static String KEY_ACTIVE_ACTION = "Action Bool";
+    private final static String KEY_ACTION = "Action";
+    private Action mAction;
+    private boolean mActionAvailable = false;
 
     // activity listener
     public interface PopDiceInteractionListener {
         void openAction(Action action);
+        void editAction(Action action);
     }
 
     @NonNull
@@ -107,7 +112,7 @@ public class SelectActionPopUp extends DialogFragment {
                 //FIXME delete item
             }
             else if(view == mEdit){
-                //FIXME delete item
+                //FIXME edit item
             }
         }
 

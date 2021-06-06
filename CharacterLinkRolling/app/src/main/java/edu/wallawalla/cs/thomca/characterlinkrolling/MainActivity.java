@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity
     private long characterID = -1;
     private Character mCharacter;
     MainFragment mainFragment;
+
+    // for action activity
+    private final static String KEY_ACTIVE_ACTION = "Action Bool";
+    private final static String KEY_ACTION = "Action";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +96,17 @@ public class MainActivity extends AppCompatActivity
         setUpMainFragmentDisplay();
     }
 
+    public void characterDeleted(long characterId){
+        if(activeCharacter){
+            if(characterId == mCharacter.getId()){
+                activeCharacter = false;
+                mCharacter = null;
+                characterClassId = R.string.classNull;
+                setUpMainFragmentDisplay();
+            }
+        }
+    }
+
     public void openAction (Action action){
         diceSides = action.getNumSides();
         diceCount = action.getDiceCount();
@@ -102,6 +118,20 @@ public class MainActivity extends AppCompatActivity
         //FIXME add save action, request name and store based on save settings
         FragmentManager manager = getSupportFragmentManager();
         EditOrSaveAction dialog = new EditOrSaveAction();
+        Bundle args = new Bundle();
+        args.putBoolean(KEY_ACTIVE_ACTION, false);
+        dialog.setArguments(args);
+        dialog.show(manager, "Save Action");
+    }
+
+    public void editAction(Action action){
+        //FIXME save changes to action (See if args work)
+        FragmentManager manager = getSupportFragmentManager();
+        EditOrSaveAction dialog = new EditOrSaveAction();
+        Bundle args = new Bundle();
+        args.putBoolean(KEY_ACTIVE_ACTION, true);
+        args.putLong(KEY_ACTION, action.getId());
+        dialog.setArguments(args);
         dialog.show(manager, "Save Action");
     }
 
