@@ -93,6 +93,14 @@ public class SelectCharacterPopUp  extends DialogFragment {
             }
             else if(view == mTrashCan){
                 character = mCharactersDatabase.characterDao().getCharacter((Long) view.getTag());
+                List<LinksBase> links = mCharactersDatabase.linksBase().getLinksBase();
+                for(int i = 0; i < links.size(); i++){
+                    // delete associated actions, consider revising with dif logic
+                   if (links.get(i).getCharId() == character.getId() ){
+                       long actionId = links.get(i).getActId();
+                       mCharactersDatabase.actionDao().deleteDice(mCharactersDatabase.actionDao().getDice(actionId));
+                   }
+                }
                 mCharactersDatabase.characterDao().deleteCharacter(character);
                 characterAdapter.removeCharacter(character);
                 mListener.characterDeleted(character.getId());

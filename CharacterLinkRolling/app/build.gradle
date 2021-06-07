@@ -36,6 +36,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.room:room-runtime:2.2.6'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0-beta01'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0-beta01'
     annotationProcessor 'androidx.room:room-compiler:2.2.6'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
