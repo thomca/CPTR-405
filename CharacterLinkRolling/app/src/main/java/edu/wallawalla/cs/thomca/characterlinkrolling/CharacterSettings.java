@@ -50,12 +50,9 @@ public class CharacterSettings extends AppCompatActivity {
             characterClass = character.getCharClass();
         }
 
-
-
         Spinner characterClassSpinner = findViewById(R.id.classSpinner);
         SwitchCompat shareBetweenClassSwitch = findViewById(R.id.sharingStatusClassSwitch);
         characterNameEditText = findViewById(R.id.characterNameEditText);
-
 
         //preset switches
             shareBetweenClassSwitch.setChecked(saveState);
@@ -63,7 +60,6 @@ public class CharacterSettings extends AppCompatActivity {
         if(characterName != null){
             characterNameEditText.setText(characterName);
         }
-
 
         //setting up spinner for character classes
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
